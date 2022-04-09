@@ -4,7 +4,7 @@ BindsTo=default.target
 
 [Service]
 Type=simple
-ExecStart=%h/.config/swhkd/swhkd.sh
+ExecStart=/usr/local/lib/swhkd.sh
 
 [Install]
 WantedBy=default.target
