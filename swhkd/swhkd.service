@@ -1,9 +1,3 @@
-# Systemd swhkd service
-#
-# /etc/systemd/user/swhkd.service
-#
-# Init by: systemctl --user enable swhkd.service
-
 [Unit]
 Description=swhkd hotkey daemon
 BindsTo=default.target

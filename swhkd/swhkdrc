@@ -1,13 +1,3 @@
-# swhkd configuration file
-#
-# /etc/swhkd/swhkdrc
-#
-# Start:
-# swhks & pkexec swhkd
-#
-# Repo:
-# https://github.com/waycrate/swhkd
-
 super + return
 	rofi -show run
 
