@@ -1,0 +1,38 @@
+
+# program launcher
+super + Return
+	rofi -show run
+
+# terminal
+super + Home
+	alacritty
+
+# browser
+super + End
+	firefox
+
+# reload sxhkd
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# bspwm
+
+# quit/restart bspwm
+super + alt + {q,r}
+	bspc {quit,wm -r}
+
+# focus the node in the given direction
+super + {Up,Left,Down,Right}
+	bspc node -f {north,west,south,east}
+
+# swap with node in the given direction
+ctrl + alt + {Up,Left,Down,Right}
+	bspc node -s {north,west,south,east}
+
+# Resize outward
+super + shift + {Up,Left,Down,Right}
+	bspc node -z {top 0 -20,left -20 0,bottom 0 -20,right 20 0}
+
+# Resize inward
+super + ctrl + {Down,Right,Up,Left}
+	bspc node -z {top 0 20,left 20 0,bottom 0 -20,right -20 0}

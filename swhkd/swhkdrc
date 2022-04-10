@@ -1,8 +1,0 @@
-super + return
-	rofi -show run
-
-home
-	alacritty
-
-end
-	firefox
