@@ -21,6 +21,10 @@ super + Escape
 super + alt + {q,r}
 	bspc {quit,wm -r}
 
+# close window
+super + q
+	bspc node --close
+
 # focus the node in the given direction
 super + {Up,Left,Down,Right}
 	bspc node -f {north,west,south,east}
