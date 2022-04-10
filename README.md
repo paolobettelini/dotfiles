@@ -4,12 +4,13 @@ My personal dotfiles for Arch Linux.
 
 + [sxhkd](./sxhkd) key-binder for X11
 + [bspwm](./bspwm) tiling window manager for X11
-+ [fish](./fish) fish shell
 + [xinit](./xinit) X server launcher
++ [alacritty](./alacritty) terminal
++ [fish](./fish) fish shell
 
 Other dependencies
 
-+ `Picom` compositor
++ `picom` compositor
++ `nitrogen` wallpaper setter
 + `rofi` application launcher
 + `firefox` browser
-+ `alacritty` terminal
