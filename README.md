@@ -7,6 +7,7 @@ My personal dotfiles for Arch Linux.
 + [xinit](./xinit) X server launcher
 + [alacritty](./alacritty) terminal
 + [fish](./fish) fish shell
++ [starship](./starship) cross-shell prompt
 
 Other dependencies
 
@@ -14,3 +15,4 @@ Other dependencies
 + `nitrogen` wallpaper setter
 + `rofi` application launcher
 + `firefox` browser
++ `nerdfonts` fonts
