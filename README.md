@@ -12,7 +12,7 @@ My personal dotfiles for Arch Linux.
 Other dependencies
 
 + `picom` compositor
-+ `nitrogen` wallpaper setter
++ `nautilus` explorer
 + `rofi` application launcher
 + `firefox` browser
 + `nerdfonts` fonts
