@@ -8,6 +8,7 @@ My personal dotfiles for Arch Linux.
 + [alacritty](./alacritty) terminal
 + [fish](./fish) fish shell
 + [starship](./starship) cross-shell prompt
++ [rfetch](./rfetch) my personal fetch software
 
 Other dependencies
 

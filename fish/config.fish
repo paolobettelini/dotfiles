@@ -6,7 +6,7 @@ if status --is-interactive
 end
 
 # Neofetch
-neofetch
+rfetch
 
 alias desktop='cd ~/Desktop'
 
