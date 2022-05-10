@@ -9,10 +9,10 @@ My personal dotfiles for Arch Linux.
 + [fish](./fish) fish shell
 + [starship](./starship) cross-shell prompt
 + [rtfetch](./rtfetch) my personal fetch software
++ [picom](./picom) compositor
 
 Other dependencies
 
-+ `picom` compositor
 + `nautilus` explorer
 + `rofi` application launcher
 + `firefox` browser

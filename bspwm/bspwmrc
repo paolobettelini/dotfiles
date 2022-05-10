@@ -3,6 +3,12 @@
 # Start sxhkd
 pgrep -x sxhkd > /dev/null || sxhkd &
 
+# Compositor
+picom --config $HOME/.config/picom/picom.conf &
+
+# Clipboard manager
+clipmenud &
+
 bspc monitor -d I II III IV V VI VII VIII IX X
 
 bspc config border_width         2
