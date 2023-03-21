@@ -142,6 +142,7 @@ pacman -S wf-recorder
 ## SDDM (Display manager)
 ```bash
 sudo pacman -S sddm
+sudo systemctl enable sddm
 
 sudo mkdir -p /etc/sddm.conf.d
 cd dotfiles
