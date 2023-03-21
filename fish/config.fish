@@ -1,4 +1,3 @@
-# start starship
 
 # Starship prompt
 if status --is-interactive
