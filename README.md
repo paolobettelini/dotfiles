@@ -46,7 +46,18 @@ git clone https://github.com/paolobettelini/dotfiles
 
 ## Common packages
 ```bash
-sudo pacman -S pipewire wireplumber slurp firefox discord dolphin gwenview alacritty exa
+sudo pacman -S
+    pipewire
+    wireplumber
+    slurp
+    firefox # browser
+    discord # discord
+    nautilus # file explorer
+    gwenview # image viewer
+    alacritty # terminal
+    exa # alternative to "ls"
+    swayimg # Image viewer with overlay
+paru -S gotop # system monitoring
 ```
 
 ## Hyprland
@@ -59,6 +70,19 @@ cd dotfiles
 mkdir -p ~/.config/hypr
 cp hyprland/hyprland.conf to ~/.config/hypr/
 cd ..
+```
+
+## Rust
+```bash
+sudo pacman -S cargo
+```
+
+## Rtfetch
+```bash
+git clone https://github.com/paolobettelini/rtfetch
+cd rtfetch
+cargo build --release
+sudo mv target/release/rtfetch /usr/local/bin
 ```
 
 ## Fish (shell)
@@ -86,11 +110,6 @@ cp rofi/config.rasi ~/.config/rofi/
 cd ..
 ```
 To start it run `rofi -show drun`.
-
-## Rust
-```bash
-sudo pacman -S cargo
-```
 
 ## Wallpapers (animated or static)
 Create a folder for your wallpapers
@@ -137,13 +156,10 @@ sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
 cd ..
 ```
 
-## Icone, font e customization di GTK: TODO
+## Icone, font
 
-## Rtfetch
-```bash
-paru -S gotop # system monitoring
-pacman -S swayimg # open image on terminal
-```
-Rtfetch: https://github.com/paolobettelini/rtfetch
-(Serve cargo e rust per compilare)
-Successivamente togliere il commendo da rtfetch nel file di conf di fish
+<!--
+fish -> exa
+hyprland -> swww
+fish -> rtfetch
+-->
