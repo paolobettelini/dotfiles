@@ -72,11 +72,18 @@ mkdir -p ~/.config/fish
 cat fish/config.fish >> ~/.config/fish/config.fish
 cp starship/starship.toml ~/.config/starship/
 ```
-The shell must automatically be started by the terminal.
+You can now set fish as the default shell
+```bash
+chsh -s /bin/fish
+```
 
 ## Application launcher
 ```bash
 sudo pacman -S rofi
+mkdir -p ~/.config/rofi
+cd dotfiles
+cp rofi/config.rasi ~/.config/rofi/
+cd ..
 ```
 To start it run `rofi -show drun`.
 
