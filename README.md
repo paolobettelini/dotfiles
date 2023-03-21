@@ -87,30 +87,62 @@ cd ..
 ```
 To start it run `rofi -show drun`.
 
-## Display manager: TODO
+## Rust
+```bash
+sudo pacman -S cargo
+```
 
-## Wallpapers and animated
-Il comando `swww`(compilarlo da https://github.com/Horus645/swww) permette di settare i background.
-Nel config di hyprland viene eseguito all'inizio `swww img /path/to/wallpaper`.
+## Wallpapers (animated or static)
+Create a folder for your wallpapers
+```bash
+mkdir -p ~/Wallpapers
+```
+Install `swww`
+```bash
+git clone https://github.com/Horus645/swww
+cd swww
+cargo build --release
+sudo mv target/release/swww /usr/local/bin/
+sudo mv target/release/swww-daemon /usr/local/bin/
+```
+To set the background run
+`swww img /path/to/wallpaper`.
 
 ## Screenshots
 ```bash
 sudo pacman -S grim
 ```
-Grim è un comando che eseguo lo screenshot. Si può mettere il binding
-o si può usare un altro softare che si basa su grim per eseguire gli screenshot tipo slameshot.
+`grim` executes a screenshot.
+There are also other programs based on grim.
 
 ## Screen recording
 ```bash
 pacman -S wf-recorder
 ```
 
+## SDDM (Display manager)
+```bash
+sudo pacman -S sddm
+
+sudo mkdir -p /etc/sddm.conf.d
+cd dotfiles
+sudo cp sddm/sddm.conf /etc/sddm.conf.d/
+```
+Download the theme from [here](https://www.opendesktop.org/p/1312658)
+```bash
+sudo mkdir -p /usr/share/sddm/themes/*
+sudo rm -r /usr/share/sddm/themes/*
+sudo tar -xzvf ~/Downloads/sugar-candy.tar.gz -C /usr/share/sddm/themes
+sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
+cd ..
+```
+
 ## Icone, font e customization di GTK: TODO
 
-## Pacchetti optional
+## Rtfetch
 ```bash
-paru -S gotop # comando di monitoring
-pacman -S swayimg # apre le immagini direttamente sul terminal (overlay)
+paru -S gotop # system monitoring
+pacman -S swayimg # open image on terminal
 ```
 Rtfetch: https://github.com/paolobettelini/rtfetch
 (Serve cargo e rust per compilare)
