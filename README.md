@@ -156,7 +156,24 @@ sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
 cd ..
 ```
 
-## Icone, font
+## Icons
+Download the icons from [here](https://www.gnome-look.org/p/1253385/)
+```bash
+sudo tar -xf ~/Downloads/Sweet.tar.xz -C /usr/share/icons
+```
+TODO
+
+## Fonts
+Download your font from
+[here](https://www.nerdfonts.com/font-downloads)
+(DejaVuSansMono Nerd Font)
+```bash
+sudo mkdir -p /usr/local/share/fonts
+sudo unzip -a ~/Downloads/DejaVuSansMono.zip -d /usr/local/share/fonts/
+/usr/local/share/fonts/
+sudo rm /usr/local/share/fonts/*.txt
+sudo rm /usr/local/share/fonts/*.md
+```
 
 <!--
 fish -> exa
