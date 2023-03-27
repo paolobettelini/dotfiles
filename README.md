@@ -52,7 +52,7 @@ sudo pacman -S
     slurp
     firefox # browser
     discord # discord
-    nautilus # file explorer
+    dolphin # file explorer
     gwenview # image viewer
     alacritty # terminal
     exa # alternative to "ls"
@@ -114,7 +114,7 @@ To start it run `rofi -show drun`.
 ## Wallpapers (animated or static)
 Create a folder for your wallpapers
 ```bash
-mkdir -p ~/Wallpapers
+sudo mkdir -p /usr/share/backgrounds
 ```
 Install `swww`
 ```bash
@@ -174,6 +174,16 @@ sudo unzip -a ~/Downloads/DejaVuSansMono.zip -d /usr/local/share/fonts/
 /usr/local/share/fonts/
 sudo rm /usr/local/share/fonts/*.txt
 sudo rm /usr/local/share/fonts/*.md
+```
+
+## Themes
+
+### QT5
+```bash
+sudo pacman -S qt5ct adwaita-qt5
+sudo pacman -S qt6ct adwaita-qt6
+qt5ct # select theme
+qt6ct # select theme
 ```
 
 <!--
