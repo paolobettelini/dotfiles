@@ -27,6 +27,7 @@ sudo pacman -S git
 git config --global user.name <user>
 git config --global user.email <email>
 ```
+TODO: keys
 
 ## Installing Paru (AUR helper)
 ```bash
