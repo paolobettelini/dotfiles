@@ -1,64 +1,39 @@
-(defwindow reboot_win 
-    :monitor 1
+(defwindow dashboard
+    :monitor 2
     :geometry (geometry
         :x "0px"
-        :y "-350px"
-        :width "130px"
-        :height "130px"
+        :y "0px"
         :anchor "center center"
-    )
-    (reboot-btn)
+  )
+  (clock)
 )
 
-(defwindow shutdown_win 
-    :monitor 1
-    :geometry (geometry
-        :x "0px"
-        :y "-210px"
-        :width "130px"
-        :height "130px"
-        :anchor "center center"
-    )
-    (shutdown-btn)
-)
+;; Dashboard
 
-(defwindow lock_win 
-    :monitor 1
-    :geometry (geometry
-        :x "0px"
-        :y "-70px"
-        :width "130px"
-        :height "130px"
-        :anchor "center center"
+(defwidget dashboard []
+    (box
+        :orientation "h"
+        :spacing "10"
+        (box
+            :orientation "h"
+            :spacing "10"
+            (box
+                :orientation "v"
+                :style "min-width: 130px"
+                :spacing "10"
+                (shutdown-btn)
+                (suspend-btn)
+            )
+            (box
+                :orientation "v"
+                :style "min-width: 130px"
+                :spacing "10"
+                (reboot-btn)
+                (logout-btn)
+            )
+        )
     )
-    (lock-btn)
 )
-
-(defwindow suspend_win 
-    :monitor 1
-    :geometry (geometry
-        :x "0px"
-        :y "70px"
-        :width "130px"
-        :height "130px"
-        :anchor "center center"
-    )
-    (suspend-btn)
-)
-
-(defwindow logout_win 
-    :monitor 1
-    :geometry (geometry
-        :x "0px"
-        :y "210px"
-        :width "130px"
-        :height "130px"
-        :anchor "center center"
-    )
-    (logout-btn)
-)
-
-;;
 
 (defwidget reboot-btn []
     (box
@@ -66,8 +41,8 @@
         :class "sysbtn"
         (button
             :class "reboot_btn"
-            :onclick "~/.config/eww/scripts/reboot.sh"
             :timeout "60s"
+            :onclick "systemctl reboot"
             ""
         )
     )
@@ -79,22 +54,9 @@
         :class "sysbtn"
         (button
             :class "shutdown_btn"
-            :onclick "~/.config/eww/scripts/shutdown.sh"
             :timeout "60s"
+            :onclick "systemctl poweroff"
             "⏻"
-        )
-    )
-)
-
-(defwidget lock-btn []
-    (box
-        :orientation "v"
-        :class "sysbtn"
-        (button
-            :class "lock_btn"
-            :onclick "~/.config/eww/scripts/lock.sh"
-            :timeout "60s"
-            ""
         )
     )
 )
@@ -105,8 +67,8 @@
         :class "sysbtn"
         (button
             :class "suspend_btn"
-            :onclick "~/.config/eww/scripts/suspend.sh"
             :timeout "60s"
+            :onclick "systemctl suspend"
             ""
         )
     )
@@ -118,9 +80,61 @@
         :class "sysbtn"
         (button
             :class "logout_btn"
-            :onclick "~/.config/eww/scripts/logout.sh"
             :timeout "60s"
             "󰗼"
+        )
+    )
+)
+
+;; Clock
+
+(defpoll HOUR :interval "5s" `date +\"%I\"`)
+(defpoll MIN :interval "5s" `date +\"%M\"`)
+(defpoll MER :interval "5s" `date +\"%p\"`)
+(defpoll DAY :interval "5s" `date +\"%A\"`)
+
+(defwidget clock [] 
+    (box
+        :orientation "h"
+        :spacing 50
+        :space-evenly false
+        :vexpand "false"
+        :hexpand "false" 
+        (box
+            :orientation "h"
+            :spacing 0
+            (label
+                :class "time_hour"
+                :valign "start"
+                :wrap "true"
+                :limit-width 25
+                :text HOUR)
+            (label
+                :class "time_min"
+                :valign "end"
+                :wrap "true"
+                :limit-width 25
+                :text MIN)
+            )
+        (box
+            :orientation "v"
+            :spacing 0 
+            (label
+                :class "time_mer"
+                :valign "start"
+                :halign "end"
+                :wrap "true"
+                :limit-width 25
+                :text MER
+            )
+            (label
+                :class "time_day"
+                :valign "end"
+                :halign "end"
+                :wrap "true"
+                :limit-width 25
+                :text DAY
+            )
         )
     )
 )

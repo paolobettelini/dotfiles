@@ -69,7 +69,8 @@ Copy the dotfiles
 ```bash
 cd dotfiles
 mkdir -p ~/.config/hypr
-cp hyprland/hyprland.conf to ~/.config/hypr/
+chmod +x hyprland/scripts/*
+cp -r hyprland/* ~/.config/hypr/
 cd ..
 ```
 

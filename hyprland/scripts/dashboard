@@ -1,0 +1,18 @@
+#!/bin/bash
+
+FILE="/tmp/eww.dashboard"
+
+## Run eww daemon if not running already
+if [[ ! `pidof eww` ]]; then
+    eww daemon
+    sleep 1
+fi
+
+## Launch or close widgets accordingly
+if [[ ! -f "$FILE" ]]; then
+    touch "$FILE"
+    eww open dashboard
+else
+    rm "$FILE"
+    eww close dashboard
+fi
