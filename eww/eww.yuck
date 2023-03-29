@@ -1,4 +1,4 @@
-(defwindow shutdown_win 
+(defwindow reboot_win 
     :monitor 1
     :geometry (geometry
         :x "100px"
@@ -6,22 +6,54 @@
         :width "130px"
         :height "130px"
     )
-    (shutdown-btn)
-)
-
-(defwindow reboot_win 
-    :monitor 1
-    :geometry (geometry
-        :x "230px"
-        :y "100px"
-        :width "130px"
-        :height "130px"
-    )
     (reboot-btn)
 )
 
+(defwindow shutdown_win 
+    :monitor 1
+    :geometry (geometry
+        :x "100px"
+        :y "240px"
+        :width "130px"
+        :height "130px"
+    )
+    (shutdown-btn)
+)
 
-;; Sys buttons
+(defwindow lock_win 
+    :monitor 1
+    :geometry (geometry
+        :x "100px"
+        :y "380px"
+        :width "130px"
+        :height "130px"
+    )
+    (lock-btn)
+)
+
+(defwindow suspend_win 
+    :monitor 1
+    :geometry (geometry
+        :x "100px"
+        :y "520px"
+        :width "130px"
+        :height "130px"
+    )
+    (suspend-btn)
+)
+
+(defwindow logout_win 
+    :monitor 1
+    :geometry (geometry
+        :x "100px"
+        :y "660px"
+        :width "130px"
+        :height "130px"
+    )
+    (logout-btn)
+)
+
+;;
 
 (defwidget reboot-btn []
     (box
@@ -49,29 +81,38 @@
     )
 )
 
-(defwidget sys_side [] 
-    
+(defwidget lock-btn []
     (box
         :orientation "v"
-        :halign "center"
         :class "sysbtn"
-        :space-evenly "true" 
-
-
         (button
-            :class "lock-side"
-            :onclick "~/.config/eww/scripts/lockscreen.sh"
+            :class "lock_btn"
+            :onclick "~/.config/eww/scripts/lock.sh"
             :timeout "60s"
             ""
         )
+    )
+)
+
+(defwidget suspend-btn []
+    (box
+        :orientation "v"
+        :class "sysbtn"
         (button
-            :class "suspend-side"
+            :class "suspend_btn"
             :onclick "~/.config/eww/scripts/suspend.sh"
             :timeout "60s"
             ""
         )
+    )
+)
+
+(defwidget logout-btn []
+    (box
+        :orientation "v"
+        :class "sysbtn"
         (button
-            :class "logout-side"
+            :class "logout_btn"
             :onclick "~/.config/eww/scripts/logout.sh"
             :timeout "60s"
             "󰗼"

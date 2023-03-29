@@ -6,7 +6,7 @@
   padding: 20px;
 }
 
-.sysbtn ~ button:hover  {
+.sysbtn button:hover  {
   color: #ffd5cd;
 }
 
@@ -17,13 +17,15 @@
 .shutdown_btn {
   color: #D35D6E;
 }
-/*
-.lock-side{
+
+.lock_btn {
   color: #ffd5cd;
 }
-.suspend-side{
+
+.suspend_btn {
   color: #c47eb7;
 }
-.logout-side{
+
+.logout_btn {
   color: #90c861;
-}*/
+}
