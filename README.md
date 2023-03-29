@@ -140,6 +140,15 @@ There are also other programs based on grim.
 pacman -S wf-recorder
 ```
 
+## Scripts
+Personal scripts
+```bash
+cd dotfiles
+sudo chmod +x scripts/*
+sudo cp scripts/* /usr/local/bin
+cd ..
+```
+
 ## SDDM (Display manager)
 ```bash
 sudo pacman -S sddm
@@ -168,6 +177,7 @@ TODO
 ## Fonts
 Download your font from
 [here](https://www.nerdfonts.com/font-downloads)
+(FantasqueSansMono Nerd Font)
 (DejaVuSansMono Nerd Font)
 ```bash
 sudo mkdir -p /usr/local/share/fonts
@@ -176,6 +186,8 @@ sudo unzip -a ~/Downloads/DejaVuSansMono.zip -d /usr/local/share/fonts/
 sudo rm /usr/local/share/fonts/*.txt
 sudo rm /usr/local/share/fonts/*.md
 ```
+
+TODO NotoColorEmoji.ttf
 
 ## Themes
 
@@ -187,7 +199,39 @@ qt5ct # select theme
 qt6ct # select theme
 ```
 
+### GTK
+TODO tokyo-night theme
+
+## Plugins
+
+### Prepare enviroment
+```bash
+git clone --recursive https://github.com/hyprwm/Hyprland
+cd Hyprland
+git reset --hard (hyprctl version | grep "commit" | awk '{print $8}' | sed 's/dirty$//')
+make pluginenv
+export HYPRLAND_HEADERS=(pwd)
+cd ..
+```
+
+### Install plugin
+```bash
+git clone https://github.com/Duckonaut/split-monitor-workspaces
+cd split-monitor-workspaces
+```
+TODO
+
+## Eww
+```bash
+paru -S eww-git
+```
+
 <!--
+TODO:
+make code and firefox "fakefullscreen" when spawned
+make the terminal floating when spawned
+
+
 fish -> exa
 hyprland -> swww
 fish -> rtfetch

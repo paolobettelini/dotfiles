@@ -1,0 +1,33 @@
+.sysbtn button {
+    font-size: 30px;
+}
+
+.search-side {
+    border-radius: 12px;
+    background-color: #272626;
+    margin: 20px 30px 20px 30px;
+  }
+  .search-side:hover {
+    color: #D35D6E;
+  }
+  .shutdown-side ~ button:hover {
+    color: #D35D6E;
+  }
+  .shutdown-side{
+    color: #D35D6E;
+  }
+  .shutdown-side:hover{
+    color: #ffd5cd;
+  }
+  .reboot-side{
+    color: #84afdb;
+  }
+  .lock-side{
+    color: #ffd5cd;
+  }
+  .suspend-side{
+    color: #c47eb7;
+  }
+  .logout-side{
+    color: #90c861;
+  }

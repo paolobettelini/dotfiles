@@ -1,0 +1,56 @@
+(defwindow sys_side 
+    :geometry (geometry
+        :x "10px"
+        :y "607px"
+        :width "300px"
+        :height "153px"
+    )
+    (sys_side)
+)
+
+(defwidget sys_side [] 
+    (box
+        :orientation "v"
+        :space-evenly "false" 
+        (button
+            :class "search-side"
+            :onclick "~/bin/launcher.sh" "  Search..."
+        )
+        (box
+            :orientation "h"
+            :halign "center"
+            :class "sysbtn"
+            :space-evenly "true" 
+            (button
+                :class "shutdown-side"
+                :onclick "~/.config/eww/scripts/shutdown.sh"
+                :timeout "60s"
+                ""
+            )
+            (button
+                :class "reboot-side"
+                :onclick "~/.config/eww/scripts/reboot.sh"
+                :timeout "60s"
+                ""
+            )
+            (button
+                :class "lock-side"
+                :onclick "~/.config/eww/scripts/lockscreen.sh"
+                :timeout "60s"
+                ""
+            )
+            (button
+                :class "suspend-side"
+                :onclick "~/.config/eww/scripts/suspend.sh"
+                :timeout "60s"
+                ""
+            )
+            (button
+                :class "logout-side"
+                :onclick "~/.config/eww/scripts/logout.sh"
+                :timeout "60s"
+                ""
+            )
+        )
+    )
+)
