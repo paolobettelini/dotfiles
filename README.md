@@ -224,7 +224,7 @@ TODO
 
 ## Eww
 ```bash
-paru -S eww-git
+paru -S eww-wayland
 ```
 
 <!--
