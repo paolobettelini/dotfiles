@@ -15,6 +15,7 @@
 
 .sysbtn {
   font-size: 75px;
+  min-width: 130px;
 }
 
 .sysbtn button {
@@ -71,7 +72,36 @@
 
 .time_day {
 	color:#EBCB8B;
-	font-size: 30px;
+  font-size: 30px;
 	font-weight: normal;
 	margin: 0px 10px 20px -20px;
+}
+
+/* Weather */
+
+.iconweather {
+	font-family: Iosevka Nerd Font;
+	font-size: 120px;
+	font-weight: normal;
+	margin: 15px 0px 0px 30px;
+}
+
+.label_temp {
+	color: #A6D1DD;
+	font-size: 80px;
+	font-weight: bold;
+	margin: -15px 30px 0px 0px;
+}
+
+.label_stat {
+	color: #BF616A;
+	font-size: 38px;
+	font-weight: bold;
+}
+
+.label_quote {
+	color: #E5E5E5;
+	font-size: 18px;
+	font-weight: normal;
+  margin: 0 10 10 10;
 }

@@ -12,25 +12,51 @@
 
 (defwidget dashboard []
     (box
-        :space-evenly false
         :orientation "v"
-        (clock)
+        :space-evenly false
+        (box
+            :halign "start"
+            :style "margin: 0 0 0 175;"
+            (clock)
+        )
         (box
             :orientation "h"
-            :spacing "10"
+            :space-evenly false
+            :spacing 10
             (box
                 :orientation "v"
-                :spacing "10"
-                :style "min-width: 130px"
-                (shutdown-btn)
-                (suspend-btn)
+                :spacing 10
+                :space-evenly false
+                (box
+                    :orientation: "h"
+                    :spacing 10
+                    :space-evenly false
+                    (box
+                        :style "margin: 0 0 10 0;"
+                        (shutdown-btn)
+                    )
+                    (box
+                        :style "margin: 10 10 0 0;"
+                        (suspend-btn)
+                    )
+                )
+                (box
+                    :orientation: "h"
+                    :spacing 10
+                    :space-evenly false
+                    (box
+                        :style "margin: 0 0 0 20;"
+                        (reboot-btn)
+                    )
+                    (box
+                        (logout-btn)
+                    )
+                )
             )
             (box
                 :orientation "v"
-                :spacing "10"
-                :style "min-width: 130px"
-                (reboot-btn)
-                (logout-btn)
+                :style "margin: 30 0 0 0;"
+                (weather)
             )
         )
     )
@@ -102,7 +128,7 @@
             :spacing 50
             :space-evenly false
             :vexpand "false"
-            :hexpand "false" 
+            :hexpand "false"
             (box
                 :orientation "h"
                 :spacing 0
@@ -138,6 +164,55 @@
                     :limit-width 25
                     :text DAY
                 )
+            )
+        )
+    )
+)
+
+;; Weather
+
+(defpoll ICON :interval "15m" `scripts/weather_info --icon`)
+(defpoll STAT :interval "15m" `scripts/weather_info --stat`)
+(defpoll TEMP :interval "15m" `scripts/weather_info --temp`)
+(defpoll HEX :interval "15m" `scripts/weather_info --hex`)
+(defpoll QUOTE :interval "15m" `scripts/weather_info --quote`)
+(defpoll QUOTE2 :interval "15m" `scripts/weather_info --quote2`)
+
+(defwidget weather [] 
+	(box
+        :class "keepbackground" 
+		(box
+            :orientation "v"
+            :spacing 10
+            :space-evenly "false"
+            :vexpand "false"
+            :hexpand "false" 
+			(box
+                :orientation "h"
+                :vexpand "false"
+                :hexpand "false" 
+				(label
+                    :class "iconweather"
+                    :halign "start"
+                    :style "color: ${HEX};"
+                    :text ICON
+                )
+				(label
+                    :class "label_temp"
+                    :halign "end"
+                    :text TEMP
+                )
+            )
+			(box
+                :orientation "v"
+                :spacing 10
+                :halign "center"
+                :space-evenly "false"
+                :vexpand "false"
+                :hexpand "false" 
+				(label :class "label_stat" :text STAT)
+				(label :class "label_quote" :text QUOTE)
+				(label :class "label_quote" :text QUOTE2)
             )
         )
     )

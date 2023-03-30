@@ -225,6 +225,7 @@ TODO
 ## Eww
 ```bash
 paru -S eww-wayland
+sudo pacman -S jq # needed by weather widget
 ```
 
 <!--
