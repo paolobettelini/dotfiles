@@ -1,5 +1,5 @@
 (defwindow dashboard
-    :monitor 1
+    :monitor 2
     :geometry (geometry
         :x "0px"
         :y "0px"

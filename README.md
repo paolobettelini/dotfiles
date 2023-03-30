@@ -226,12 +226,18 @@ TODO
 ```bash
 paru -S eww-wayland
 sudo pacman -S jq # needed by weather widget
+cd dotfiles
+cmod +x eww/scripts/*
+cp -r eww/* ~/.config/eww/;
+cd ..
 ```
+TODO Api key, city ...
 
 <!--
 TODO:
 make code and firefox "fakefullscreen" when spawned
-make the terminal floating when spawned
+make non floating window drabble without centering
+them around the cursor
 
 
 fish -> exa

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-FILE="/tmp/eww.dashboard"
+# This file keeps the state of the
+# widget. It also holds the last workspace
+TOGGLEFILE="/tmp/eww.dashboard"
 
 ## Run eww daemon if not running already
 if [[ ! `pidof eww` ]]; then
@@ -9,10 +11,21 @@ if [[ ! `pidof eww` ]]; then
 fi
 
 ## Launch or close widgets accordingly
-if [[ ! -f "$FILE" ]]; then
-    touch "$FILE"
+if [[ ! -f "$TOGGLEFILE" ]]; then
+    touch "$TOGGLEFILE"
+
+    # get current workspace and write it to the file
+    hyprctl activewindow | grep "workspace: " | \
+        cut -d' ' -f2 > "$TOGGLEFILE"
+    # toggle to workspace 9
+    hyprctl dispatch workspace 9
+
     eww open dashboard
 else
-    rm "$FILE"
     eww close dashboard
+
+    # toggle back
+    hyprctl dispatch workspace $(cat "$TOGGLEFILE")
+    
+    rm "$TOGGLEFILE"
 fi
