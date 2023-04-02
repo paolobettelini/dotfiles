@@ -22,12 +22,28 @@ iwctl
 ```
 
 ## Git
+
+### Basic configuration
 ```bash
 sudo pacman -S git
 git config --global user.name <user>
 git config --global user.email <email>
 ```
-TODO: keys
+
+### GPG Keys
+```bash
+gpg2 --expert --full-gen-key
+# get the ID of the key using
+gpg2 --list-secret-keys
+gpg2 --export --armor --output public.gpg <KEY>
+```
+Import the key to your profile
+at [https://github.com/settings/keys](https://github.com/settings/keys)
+```bash
+rm public.gpg
+git config --global user.signingkey <KEY>
+git config --global commit.gpgsign true 
+```
 
 ## Installing Paru (AUR helper)
 ```bash
@@ -253,11 +269,7 @@ TODO
 
 ## LaTeX
 ```bash
-sudo pacman -S \
-    texlive-core \
-    texlive-latexextra \
-    texlive-bibtexextra \
-    tectonic
+sudo pacman -S tectonic
 ```
 
 <!--
