@@ -26,7 +26,6 @@ update_weather_data() {
         weather_icon_code=`echo "$weather" | jq -r ".weather[].icon" | head -1`
         weather_description=`echo "$weather" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g"`
 
-        #Big long if statement of doom
         if [ "$weather_icon_code" == "50d"  ]; then
             weather_icon=" "
             weather_quote="Forecast says it's misty \nMake sure you don't get lost on your way..."

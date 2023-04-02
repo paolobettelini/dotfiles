@@ -207,6 +207,8 @@ TODO tokyo-night theme
 
 ### Prepare enviroment
 ```bash
+paru -S libdisplay-info # I don't know if you need this
+
 git clone --recursive https://github.com/hyprwm/Hyprland
 cd Hyprland
 git reset --hard (hyprctl version | grep "commit" | awk '{print $8}' | sed 's/dirty$//')
@@ -215,10 +217,12 @@ export HYPRLAND_HEADERS=(pwd)
 cd ..
 ```
 
-### Install plugin
+### Install plugin(s)
 ```bash
 git clone https://github.com/Duckonaut/split-monitor-workspaces
 cd split-monitor-workspaces
+make all
+# :(
 ```
 TODO
 
@@ -227,11 +231,34 @@ TODO
 paru -S eww-wayland
 sudo pacman -S jq # needed by weather widget
 cd dotfiles
-cmod +x eww/scripts/*
+chmod +x eww/scripts/*
 cp -r eww/* ~/.config/eww/;
 cd ..
 ```
 TODO Api key, city ...
+
+TODO install qt5-wayland or qt6-wayland 
+
+## MPD
+```bash
+sudo pacman -S mpc mpd
+mkdir -p ~/.config/mpd
+mkdir -p ~/.mpd
+cd dotfiles
+cp mpd/mpd.conf ~/.config/mpd/mpd.conf
+cd ..
+systemctl --user enable mpd.service
+```
+TODO
+
+## LaTeX
+```bash
+sudo pacman -S \
+    texlive-core \
+    texlive-latexextra \
+    texlive-bibtexextra \
+    tectonic
+```
 
 <!--
 TODO:
