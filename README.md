@@ -41,6 +41,8 @@ Import the key to your profile
 at [https://github.com/settings/keys](https://github.com/settings/keys)
 ```bash
 rm public.gpg
+git config --global --unset gpg.program
+git config --global --add gpg.program /usr/bin/gpg2
 git config --global user.signingkey <KEY>
 git config --global commit.gpgsign true 
 ```
