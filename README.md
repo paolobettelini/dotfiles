@@ -31,14 +31,28 @@ git config --global user.email <email>
 ```
 
 ### GPG Keys
+
 ```bash
+# Create the key pair
 gpg2 --expert --full-gen-key
-# get the ID of the key using
+# or import them
+gpg2 --import public.gpg
+gpg2 --import private.gpg
+```
+
+Get the uid of the key using
+```bash
 gpg2 --list-secret-keys
+```
+
+If you created the key pair, export the public key
+```bash
 gpg2 --export --armor --output public.gpg <KEY>
 ```
+
 Import the key to your profile
 at [https://github.com/settings/keys](https://github.com/settings/keys)
+and set up git
 ```bash
 rm public.gpg
 git config --global --unset gpg.program
