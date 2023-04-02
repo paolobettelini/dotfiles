@@ -10,21 +10,16 @@ cache_weather_degree=${cache_dir}/weather-degree
 cache_weather_quote=${cache_dir}/weather-quote
 cache_weather_hex=${cache_dir}/weather-hex
 cache_weather_icon=${cache_dir}/weather-icon
+update_interval=15 # minutes
 
 ## Weather data
-KEY="<key>"
+KEY="<key>" # Get your free key at api.openweathermap.org
 CITY="London,uk"
 UNITS="metric"
 
-## Make cache dir
-if [[ ! -d "$cache_dir" ]]; then
-    mkdir -p ${cache_dir}
-fi
-
 ## Get data
-get_weather_data() {
+update_weather_data() {
     weather=`curl -sf "http://api.openweathermap.org/data/2.5/weather?q="$CITY"&units="$UNITS"&appid="$KEY""`
-    echo ${weather}
 
     if [ ! -z "$weather" ]; then
         weather_temp=`echo "$weather" | jq ".main.temp" | cut -d "." -f 1`
@@ -132,8 +127,25 @@ get_weather_data() {
 }
 
 ## Execute
-if [[ "$1" == "--getdata" ]]; then
-    get_weather_data
+
+## Make cache dir
+if [[ ! -d "$cache_dir" ]]; then
+    mkdir -p ${cache_dir}
+    update_weather_data
+else
+    ## Update if some time has passed
+    last_modification=$(stat -c %Y "$cache_weather_degree")
+    current_time=$(date +%s)
+    time_diff=$((current_time - last_modification))
+    minutes=$((time_diff / 60))
+    if [[ $minutes -ge $update_interval ]]; then
+        update_weather_data
+    fi
+fi
+
+## Output requeste value if any
+if [[ "$1" == "--update" ]]; then # manual update
+    update_weather_data
 elif [[ "$1" == "--icon" ]]; then
     cat ${cache_weather_icon}
 elif [[ "$1" == "--temp" ]]; then
