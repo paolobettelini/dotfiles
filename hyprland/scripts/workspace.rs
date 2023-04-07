@@ -14,7 +14,7 @@
 // This should be the default. If you changed them
 // edit the following variable with your
 // monitor-default workspace displacements
-const displacements: [usize; 3] = [1, 2, 3];
+const DISPLACEMENTS: [usize; 3] = [1, 2, 3];
 
 use std::{
     env::args,
@@ -42,8 +42,8 @@ fn main() {
     let monitors = get_monitors();
     let cursor_pos = get_cursor_position();
     let current_monitor = get_current_monitor(&monitors, cursor_pos).unwrap();
-    let monitor_id = displacements[current_monitor.id] - 1;
-    let actual_workspace = (args.workspace - 1) * monitors.len() + monitor_id + 1;
+    let actual_workspace =
+        (args.workspace - 1) * monitors.len() + DISPLACEMENTS[current_monitor.id];
 
     dispatch_workspace_cmd(&args.command, actual_workspace);
 }
@@ -65,24 +65,19 @@ fn dispatch_workspace_cmd(cmd: &str, workspace: usize) {
     // Dispatch command
     Command::new("hyprctl")
         .arg("dispatch")
-        .arg(&cmd)
+        .arg(cmd)
         .arg(&workspace.to_string())
         .output()
         .unwrap();
 }
 
-fn get_current_monitor(monitors: &Vec<Monitor>, cursor_pos: (i32, i32)) -> Option<&Monitor> {
-    for monitor in monitors {
-        if cursor_pos.0 >= monitor.pos_x
+fn get_current_monitor(monitors: &[Monitor], cursor_pos: (i32, i32)) -> Option<&Monitor> {
+    monitors.iter().find(|&monitor| {
+        cursor_pos.0 >= monitor.pos_x
             && cursor_pos.1 >= monitor.pos_y
             && cursor_pos.0 < monitor.pos_x + monitor.width as i32
             && cursor_pos.1 < monitor.pos_y + monitor.height as i32
-        {
-            return Some(monitor);
-        }
-    }
-
-    None
+    })
 }
 
 fn get_monitors() -> Vec<Monitor> {
@@ -104,10 +99,10 @@ fn get_monitors() -> Vec<Monitor> {
             continue;
         }
 
-        if line.contains("@") {
-            let split: Vec<&str> = line.trim().split("@").collect();
+        if line.contains('@') {
+            let split: Vec<&str> = line.trim().split('@').collect();
             let resolution = extract_tuple(split[0], "x").unwrap();
-            let split: Vec<&str> = split[1].split(" ").collect();
+            let split: Vec<&str> = split[1].split(' ').collect();
             let position = extract_tuple(split[2], "x").unwrap();
 
             monitors.push(Monitor {
@@ -132,7 +127,7 @@ fn get_cursor_position() -> (i32, i32) {
         .stdout;
 
     let input = from_utf8(&raw).unwrap().trim_end();
-    extract_tuple(&input, ", ").unwrap()
+    extract_tuple(input, ", ").unwrap()
 }
 
 // "1920x1080" -> (1820, 1080)
