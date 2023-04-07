@@ -17,7 +17,7 @@ if [[ ! -f "$TOGGLEFILE" ]]; then
     # get current workspace and write it to the file
     hyprctl activewindow | grep "workspace: " | \
         cut -d' ' -f2 > "$TOGGLEFILE"
-    # toggle to workspace 9
+    # toggle to first 9 workspace
     hyprctl dispatch workspace 9
 
     eww open dashboard

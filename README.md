@@ -93,22 +93,24 @@ sudo pacman -S
 paru -S gotop # system monitoring
 ```
 
+## Rust
+```bash
+sudo pacman -S cargo
+```
+
 ## Hyprland
 ```bash
 paru -S hyprland-git
 ```
 Copy the dotfiles
 ```bash
-cd dotfiles
+cd dotfiles/hyprland/scripts
+rust -O workspace.rs
+cd ../..
 mkdir -p ~/.config/hypr
 chmod +x hyprland/scripts/*
 cp -r hyprland/* ~/.config/hypr/
 cd ..
-```
-
-## Rust
-```bash
-sudo pacman -S cargo
 ```
 
 ## Rtfetch
