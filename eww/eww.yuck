@@ -15,9 +15,18 @@
         :orientation "v"
         :space-evenly false
         (box
-            :halign "start"
-            :style "margin: 0 0 0 175;"
-            (clock)
+            :orientation "h"
+            :space-evenly false
+            (box
+                :halign "start"
+                :style "margin: 0 0 0 10;"
+                (volume)
+            )
+            (box
+                :halign "start"
+                :style "margin: 0 0 0 50;"
+                (clock)
+            )
         )
         (box
             :orientation "h"
@@ -109,6 +118,26 @@
             :class "logout_btn"
             :timeout "60s"
             "󰗼"
+        )
+    )
+)
+
+;; Volume
+
+; Please fix this. It doesn't need to be repeating
+(defpoll VOLUME :interval "1h" `scripts/volume get`)
+
+(defwidget volume []
+    (box
+        :orientation "v"
+        :class "keepbackground volume"
+        (scale
+            :value VOLUME
+            :min 0
+            :max 25
+            :draw-value true
+            :orientation "h"
+            :onchange "scripts/volume set {}"
         )
     )
 )

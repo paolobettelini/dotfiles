@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This program runs "pw-volume status" to get current volume
+# It then computed the delta and dispatches "pw-volume change X%"
+# Apparently there is not yet a way to just directly set the %
+
+# Check if number parameter is provided
+if [ $1 == "--help" ]; then
+    echo "Usage:"
+    echo "\t$0 get"
+    echo "\t$0 set 5%"
+    exit 1
+fi
+
+action="$1"
+number="$2"
+
+# Get percentage from "pw-volume status" command
+percentage=$(pw-volume status | grep -oP '(?<="percentage":)[^,]+')
+
+if [ "$action" == "get" ]; then
+    echo $percentage
+elif [ "$action" == "set" ]; then
+    requested_percentage=$(echo "$number" | cut -d. -f1)
+
+    # Calculate the difference between parameter and percentage
+    difference=$(( requested_percentage - percentage ))
+
+    # Execute "pw-volume change {}%" with calculated difference value
+    pw-volume change "$difference%"
+else
+    echo "Inalid input. Call with '--help'"
+fi

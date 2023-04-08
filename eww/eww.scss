@@ -104,3 +104,13 @@
   font-weight: normal;
   margin: 0 10 10 10;
 }
+
+/* Volume */
+.volume {
+  margin: 10 10 10 10;
+  min-width: 130px;
+}
+
+.volume slider {
+  background-color: red;
+}
