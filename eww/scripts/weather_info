@@ -113,7 +113,7 @@ update_weather_data() {
         fi
         echo "$weather_icon" >  ${cache_weather_icon}
         echo "$weather_description" > ${cache_weather_stat}
-        echo "$weather_temp""°C" > ${cache_weather_degree}
+        echo "$weather_temp" > ${cache_weather_degree}
         echo -e "$weather_quote" > ${cache_weather_quote}
         echo "$weather_hex" > ${cache_weather_hex}
     else
@@ -148,7 +148,7 @@ if [[ "$1" == "--update" ]]; then # manual update
 elif [[ "$1" == "--icon" ]]; then
     cat ${cache_weather_icon}
 elif [[ "$1" == "--temp" ]]; then
-    cat ${cache_weather_degree}
+    cat ${cache_weather_degree} | tr -d '\n' && echo "°C"
 elif [[ "$1" == "--hex" ]]; then
     cat ${cache_weather_hex}
 elif [[ "$1" == "--stat" ]]; then
@@ -156,5 +156,31 @@ elif [[ "$1" == "--stat" ]]; then
 elif [[ "$1" == "--quote" ]]; then
     cat ${cache_weather_quote} | head -n1
 elif [[ "$1" == "--quote2" ]]; then
-    cat ${cache_weather_quote} | tail -n1
+    temp=$(cat $cache_weather_degree)
+
+    result=$(curl -sf "http://numbersapi.com/$temp/math")
+
+    # Loop through the characters and print them
+    count=0
+    for ((i=0; i<${#result}; i++)); do
+    echo -n "${result:i:1}" # Print the current character
+    ((count++))
+
+    # Add a new line after every 40 characters, but avoid cutting words
+    if ((count == 40)); then
+        if [[ ${result:i+1:1} == " " ]]; then
+        echo # Print a new line
+        count=0
+        else
+        while [[ ${result:i+1:1} != " " && $i -lt ${#result} ]]; do
+            echo -n "${result:i+1:1}" # Print the next character
+            ((i++))
+        done
+        echo # Print a new line
+        count=0
+        fi
+    fi
+    done
+    
+    #cat ${cache_weather_quote} | tail -n1
 fi
