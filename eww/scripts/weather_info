@@ -13,8 +13,8 @@ cache_weather_icon=${cache_dir}/weather-icon
 update_interval=15 # minutes
 
 ## Weather data
-KEY="<key>" # Get your free key at api.openweathermap.org
-CITY="London,uk"
+KEY="b8faef465b2188449ae24e93b59310a4" # Get your free key at api.openweathermap.org
+CITY="Caslano,ch"
 UNITS="metric"
 
 ## Get data
