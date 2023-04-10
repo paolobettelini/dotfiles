@@ -80,6 +80,10 @@
 
 /* Weather */
 
+.weather {
+  padding-bottom: 62.5px;
+}
+
 .iconweather {
   font-size: 120px;
   font-weight: normal;
@@ -99,16 +103,15 @@
   font-weight: bold;
 }
 
-.label_quote {
-  color: #E5E5E5;
-  font-size: 18px;
-  font-weight: normal;
-  margin: 0 10 10 10;
-}
-
 /* Volume */
+
 .volume {
   min-width: 130px;
+}
+
+.volume label {
+  font-size: 50px;
+  color: #4a93bb;
 }
 
 .volume slider {

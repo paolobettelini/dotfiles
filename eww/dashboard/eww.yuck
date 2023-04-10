@@ -72,9 +72,12 @@
             )
         )
         (box
-            :space-evenly false
-            :style "margin:  5 5 5 5;"
-            (weather)
+            :orientation "v"
+            (box
+                :space-evenly false
+                :style "margin:  5 5 145 5;"
+                (weather)
+            )
         )
     )
 )
@@ -141,7 +144,7 @@
     (box
         :orientation "v"
         :class "keepbackground volume"
-        "Volume"
+        (label :class "volume_icon" :text 󰕾)
         (scale
             :value VOLUME
             :min 0
@@ -215,12 +218,10 @@
 (defpoll STAT :interval "10m" `weather_info --stat`)
 (defpoll TEMP :interval "10m" `weather_info --temp`)
 (defpoll HEX :interval "10m" `weather_info --hex`)
-(defpoll QUOTE :interval "10m" `weather_info --quote`)
-(defpoll QUOTE2 :interval "10m" `weather_info --quote2`)
 
 (defwidget weather [] 
 	(box
-        :class "keepbackground" 
+        :class "keepbackground weather" 
 		(box
             :orientation "v"
             :spacing 10
@@ -251,8 +252,6 @@
                 :vexpand "false"
                 :hexpand "false" 
 				(label :class "label_stat" :text STAT)
-				(label :class "label_quote" :text QUOTE)
-				(label :class "label_quote" :text QUOTE2)
             )
         )
     )
