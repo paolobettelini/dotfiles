@@ -163,24 +163,25 @@ elif [[ "$1" == "--quote2" ]]; then
     # Loop through the characters and print them
     count=0
     for ((i=0; i<${#result}; i++)); do
-    echo -n "${result:i:1}" # Print the current character
-    ((count++))
+        echo -n "${result:i:1}" # Print the current character
+        ((count++))
 
-    # Add a new line after every 40 characters, but avoid cutting words
-    if ((count == 40)); then
-        if [[ ${result:i+1:1} == " " ]]; then
-        echo # Print a new line
-        count=0
-        else
-        while [[ ${result:i+1:1} != " " && $i -lt ${#result} ]]; do
-            echo -n "${result:i+1:1}" # Print the next character
-            ((i++))
-        done
-        echo # Print a new line
-        count=0
+        # Add a new line after every 40 characters, but avoid cutting words
+        if ((count == 40)); then
+            if [[ ${result:i+1:1} == " " ]]; then
+            echo # Print a new line
+            count=0
+            else
+            while [[ ${result:i+1:1} != " " && $i -lt ${#result} ]]; do
+                echo -n "${result:i+1:1}" # Print the next character
+                ((i++))
+            done
+            echo # Print a new line
+            count=0
+            fi
         fi
-    fi
     done
     
+    # Old body
     #cat ${cache_weather_quote} | tail -n1
 fi
