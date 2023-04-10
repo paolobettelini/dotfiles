@@ -144,7 +144,7 @@
     (box
         :orientation "v"
         :class "keepbackground volume"
-        (label :class "volume_icon" :text 󰕾)
+        (label :text "󰕾")
         (scale
             :value VOLUME
             :min 0
