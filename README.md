@@ -98,6 +98,34 @@ paru -S gotop # system monitoring
 sudo pacman -S cargo
 ```
 
+## Scripts
+Personal scripts
+
+### Dependencies
+```bash
+# needed by volume
+git clone https://github.com/smasher164/pw-volume
+cd pw-volume
+cargo b --release
+sudo mv target/release/pw-volume /usr/local/bin
+cd ..
+rm -r pw-volume/*
+
+# needed by weather script
+sudo pacman -S jq
+```
+
+```bash
+sudo pacman -S jq
+cd dotfiles
+cd scripts
+rustc -O workspace.rs
+cd ..
+sudo chmod +x scripts/*
+sudo cp scripts/* /usr/local/bin
+cd ..
+```
+
 ## Hyprland
 ```bash
 paru -S hyprland-git
@@ -173,15 +201,6 @@ There are also other programs based on grim.
 ## Screen recording
 ```bash
 pacman -S wf-recorder
-```
-
-## Scripts
-Personal scripts
-```bash
-cd dotfiles
-sudo chmod +x scripts/*
-sudo cp scripts/* /usr/local/bin
-cd ..
 ```
 
 ## SDDM (Display manager)
@@ -263,7 +282,6 @@ TODO
 ## Eww
 ```bash
 paru -S eww-wayland
-sudo pacman -S jq # needed by weather widget
 cd dotfiles
 chmod +x eww/scripts/*
 cp -r eww/* ~/.config/eww/;
