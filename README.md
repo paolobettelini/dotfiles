@@ -116,7 +116,6 @@ sudo pacman -S jq
 ```
 
 ```bash
-sudo pacman -S jq
 cd dotfiles
 cd scripts
 rustc -O workspace.rs
@@ -132,11 +131,8 @@ paru -S hyprland-git
 ```
 Copy the dotfiles
 ```bash
-cd dotfiles/hyprland/scripts
-rust -O workspace.rs
-cd ../..
+cd dotfiles
 mkdir -p ~/.config/hypr
-chmod +x hyprland/scripts/*
 cp -r hyprland/* ~/.config/hypr/
 cd ..
 ```
@@ -283,8 +279,7 @@ TODO
 ```bash
 paru -S eww-wayland
 cd dotfiles
-chmod +x eww/scripts/*
-cp -r eww/* ~/.config/eww/;
+cp -r eww/* ~/.config/eww/
 cd ..
 ```
 TODO Api key, city ...
