@@ -78,7 +78,7 @@
         (button
             :class "reboot_btn"
             :timeout "60s"
-            :onclick "systemctl reboot"
+            :onclick "dashboard systemctl reboot"
             ""
         )
     )
@@ -91,7 +91,7 @@
         (button
             :class "shutdown_btn"
             :timeout "60s"
-            :onclick "systemctl poweroff"
+            :onclick "dashboard systemctl poweroff"
             "⏻"
         )
     )
@@ -104,7 +104,7 @@
         (button
             :class "suspend_btn"
             :timeout "60s"
-            :onclick "systemctl suspend"
+            :onclick "dashboard systemctl suspend"
             ""
         )
     )
