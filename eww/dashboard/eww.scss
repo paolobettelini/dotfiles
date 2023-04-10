@@ -4,6 +4,7 @@
 }
 
 .keepbackground {
+  /* TODO take it from the theme */
   background-color: rgb(54, 54, 54);
 }
 
@@ -48,7 +49,7 @@
 /* Clock */
 
 .clock {
-  margin-bottom: 10px;
+  min-width: 410px;
 }
 
 .time_hour, .time_min {
@@ -107,10 +108,35 @@
 
 /* Volume */
 .volume {
-  margin: 10 10 10 10;
   min-width: 130px;
 }
 
 .volume slider {
-  background-color: red;
+  border-radius: 5px;
+}
+
+/* Web */
+.webbtn {
+  min-width: 130px;
+  min-height: 130px;
+
+  color: #FFFFFF;
+  font-size: 80px;
+  font-weight: normal;
+}
+
+.github {
+  background-color: #24292E;
+}
+
+.reddit {
+  background-color: #E46231;
+}
+
+.youtube {
+  background-color: #f93636;
+}
+
+.whatsapp {
+  background-color: #28a219;
 }
