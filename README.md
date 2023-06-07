@@ -90,6 +90,7 @@ sudo pacman -S
     alacritty # terminal
     exa # alternative to "ls"
     swayimg # Image viewer with overlay
+    celluloid # Video player
 paru -S gotop # system monitoring
 ```
 
