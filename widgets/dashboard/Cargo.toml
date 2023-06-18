@@ -1,0 +1,15 @@
+[package]
+name = "dashboard"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+gtk = "0.17.1"
+widgetbuilder = { path = "../widgetbuilder", features = ["wayland"] }
+
+reqwest = { version = "0.11.18", features = ["blocking"] }
+serde_json = "1.0.97"
+tokio = "1.28.2"
+chrono = "0.4.26"

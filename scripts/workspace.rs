@@ -21,6 +21,8 @@ const DISPLACEMENTS: [usize; 3] = [1, 2, 3];
 // the workspaces to their correct monitors.
 // This is also useful if the workspaces-monitors get messed up.
 
+// TODO ora si può usare "hyprctl activeworkspace" per ottenere il monitor corrente
+
 use std::{
     env::args,
     process::Command,

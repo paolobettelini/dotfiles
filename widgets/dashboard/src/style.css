@@ -1,0 +1,58 @@
+* {
+    border: unset;
+    border-radius: 10px;
+}
+
+.keepbackground {
+    /* TODO take it from the theme */
+    background-color: rgb(54, 54, 54);
+}
+
+:not(.keepbackground) {
+    background-color: transparent;
+}
+
+.margin1 {
+    margin: 5px 5px 5px 5px;
+}
+
+#weather {
+    padding-bottom: 55px;
+    margin: 5px 5px 145px 5px;
+}
+
+/* Sys buttons */
+
+#reboot button {
+    color: #84afdb;
+}
+
+#shutdown button {
+    color: #D35D6E;
+}
+
+#suspend button {
+    color: #c47eb7;
+}
+
+#logout button {
+    color: #90c861;
+}
+
+/* Web buttons */
+
+#github {
+    background-color: #24292E;
+}
+
+#reddit {
+    background-color: #E46231;
+}
+
+#youtube {
+    background-color: #f93636;
+}
+
+#whatsapp {
+    background-color: #28a219;
+}

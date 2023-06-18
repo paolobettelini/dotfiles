@@ -104,16 +104,8 @@ Personal scripts
 
 ### Dependencies
 ```bash
-# needed by volume
-git clone https://github.com/smasher164/pw-volume
-cd pw-volume
-cargo b --release
-sudo mv target/release/pw-volume /usr/local/bin
-cd ..
-rm -r pw-volume/*
-
-# needed by weather script
-sudo pacman -S jq
+# needed by dashboard volume manager
+sudo pacman -S alsa-utils
 ```
 
 ```bash
@@ -276,12 +268,12 @@ make all
 ```
 TODO
 
-## Eww
+## Widgets
 ```bash
-paru -S eww-wayland
-cd dotfiles
-cp -r eww/* ~/.config/eww/
-cd ..
+cd dotfiles/widgets/dashboard
+cargo b --release
+sudo mv target/release/dashboard /usr/local/bin/
+cd ../..
 ```
 TODO Api key, city ...
 

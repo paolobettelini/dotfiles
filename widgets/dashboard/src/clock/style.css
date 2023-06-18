@@ -1,0 +1,31 @@
+#clock {
+    min-width: 410px;
+}
+
+#time_hour, #time_min {
+    color: #81A1C1;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+#time_hour {
+    margin: 15px 0px 0px 20px;
+}
+
+#time_min {
+    margin: 0px 0px 10px 0px;
+}
+
+#time_mer {
+    color: #A3BE8C;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 20px 10px 0px 0px;
+}
+
+#time_day {
+    color:#EBCB8B;
+    font-size: 30px;
+    font-weight: normal;
+    margin: 0px 10px 20px -20px;
+}

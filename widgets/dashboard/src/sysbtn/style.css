@@ -1,0 +1,15 @@
+.sysbtn {
+    font-size: 75px;
+    min-width: 130px;
+}
+
+.sysbtn button {
+    /* width - 110px */
+    /* e.g. 130 - 110 = 20px */
+    /* "110px" depends on font-size */
+    padding: 20px;
+}
+
+.sysbtn button:hover  {
+    color: #ffd5cd;
+}

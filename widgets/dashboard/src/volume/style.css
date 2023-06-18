@@ -1,0 +1,12 @@
+.volume {
+    min-width: 130px;
+}
+
+.volume label {
+    font-size: 50px;
+    color: #4a93bb;
+}
+
+.volume slider {
+    border-radius: 5px;
+}

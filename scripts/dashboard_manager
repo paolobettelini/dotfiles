@@ -5,44 +5,38 @@
 #       dasbboard
 #       # Close dashboard and dispatch cmd
 #       dashboard <cmd>
+#       TODO I don't use this feature anymore (?)
 
-# This file keeps the state of the
-# widget. It also holds the last workspace
-TOGGLEFILE="/tmp/eww.dashboard"
-CONFIG="$HOME/.config/eww/dashboard"
-
-run_daemon() {
-    ## Run eww daemon if not running already
-    if [[ ! `pidof eww` ]]; then
-        eww -c "$CONFIG" daemon
-        sleep 1
-    fi
-}
+# Keep track of the process PID
+PIDFILE="/tmp/widgets.dashboard.pid"
+# Keep track of the last workspace
+WORKSPACEFILE="/tmp/widgets.dashboard.ws"
 
 open_dashboard() {
-    touch "$TOGGLEFILE"
-
     # get current workspace and write it to the file
     hyprctl activewindow | grep "workspace: " | \
-        cut -d' ' -f2 > "$TOGGLEFILE"
+        cut -d' ' -f2 > "$WORKSPACEFILE"
     # toggle to first 9 workspace
     hyprctl dispatch workspace 9
 
-    eww  -c "$CONFIG" open dashboard
+    dashboard &
+    pid=$!
+    echo "$pid" > "$PIDFILE"
 }
 
 close_dashboard() {
-    eww -c "$CONFIG" close dashboard
+    pid=$(cat "$PIDFILE")
+    kill "$pid"
 
     # toggle back
-    hyprctl dispatch workspace $(cat "$TOGGLEFILE")
+    hyprctl dispatch workspace $(cat "$WORKSPACEFILE")
     
-    rm "$TOGGLEFILE"
+    rm "$PIDFILE"
 }
 
 toggle_dashboard() {
     ## Launch or close widgets accordingly
-    if [[ -f "$TOGGLEFILE" ]]; then
+    if [[ -f "$PIDFILE" ]]; then
         close_dashboard
     else
         open_dashboard
@@ -57,6 +51,5 @@ if [ "$#" -gt 0 ]; then
     # Execute the command using eval
     eval "$command"
 else
-    run_daemon
     toggle_dashboard
 fi
