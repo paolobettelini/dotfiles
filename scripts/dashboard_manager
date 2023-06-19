@@ -5,7 +5,6 @@
 #       dasbboard
 #       # Close dashboard and dispatch cmd
 #       dashboard <cmd>
-#       TODO I don't use this feature anymore (?)
 
 # Keep track of the process PID
 PIDFILE="/tmp/widgets.dashboard.pid"
@@ -16,8 +15,8 @@ open_dashboard() {
     # get current workspace and write it to the file
     hyprctl activewindow | grep "workspace: " | \
         cut -d' ' -f2 > "$WORKSPACEFILE"
-    # toggle to first 9 workspace
-    hyprctl dispatch workspace 9
+    # toggle to dashboard workspace
+    hyprctl dispatch workspace name:Dashboard
 
     dashboard &
     pid=$!
@@ -43,7 +42,7 @@ toggle_dashboard() {
     fi
 }
 
-if [ "$#" -gt 0 ]; then
+if [ "$#" -gt 0 ]; then # I don't use this feature anymore (?)
     close_dashboard
 
     # Join all the arguments to form a command
