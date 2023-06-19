@@ -25,8 +25,8 @@ pub fn logout() {
 pub fn suspend() {
     println!("Suspending");
 
-    Command::new("suspend")
-        .args(&["reboot"])
+    Command::new("systemctl")
+        .args(&["suspend"])
         .spawn()
         .expect("Failed to execute suspend command.");
 }
