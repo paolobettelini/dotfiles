@@ -8,9 +8,7 @@ pub fn popoulate(container: &gtk::Box, icon: &str, action: fn() -> ()) {
     load_css(include_bytes!("style.css"));
 
     // Init UI
-    let inner_container = gtk::Box::builder()
-        .orientation(Vertical)
-        .build();
+    let inner_container = gtk::Box::builder().orientation(Vertical).build();
     inner_container.style_context().add_class("sysbtn");
 
     let button = gtk::Button::builder()

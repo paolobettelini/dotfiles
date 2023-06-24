@@ -1,16 +1,15 @@
 use gtk::glib;
 use gtk::glib::*;
 use gtk::prelude::*;
-use gtk::{Align::*, Orientation::*};
+use gtk::Orientation::*;
 use std::rc::Rc;
 use std::time::Duration;
-use gtk::TextTagTable;
+
 use gtk::TextBuffer;
 use std::cell::RefCell;
-use std::sync::Arc;
 
-use widgetbuilder::load_css;
 use widgetbuilder::cache::*;
+use widgetbuilder::load_css;
 
 pub fn popoulate(container: &gtk::Box) {
     // Init CSS
@@ -28,13 +27,11 @@ pub fn popoulate(container: &gtk::Box) {
         .build();
 
     // Create a scrolled window
-    let scrolled_window = gtk::ScrolledWindow::new(None::<&gtk::Adjustment>, None::<&gtk::Adjustment>);
+    let scrolled_window =
+        gtk::ScrolledWindow::new(None::<&gtk::Adjustment>, None::<&gtk::Adjustment>);
     scrolled_window.set_policy(gtk::PolicyType::Automatic, gtk::PolicyType::Automatic);
 
-    let textview = gtk::TextView::builder()
-        .hexpand(true)
-        .vexpand(true)
-        .build();
+    let textview = gtk::TextView::builder().hexpand(true).vexpand(true).build();
     textview.set_wrap_mode(gtk::WrapMode::WordChar);
     textview.set_editable(true);
     textview.set_widget_name("notes-editor"); // set CSS id
@@ -65,11 +62,11 @@ pub fn popoulate(container: &gtk::Box) {
         let mut timeout_id = timeout_id_clone.borrow_mut();
         if let Some(source_id) = timeout_id.take() {
             let source = main_context.find_source_by_id(&source_id);
-            
+
             if source.is_some() {
                 source_id.remove();
             }
-            
+
             *timeout_id = None;
         }
 

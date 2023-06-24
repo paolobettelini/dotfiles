@@ -1,10 +1,10 @@
+use chrono::prelude::*;
+use gtk::glib;
+use gtk::glib::*;
 use gtk::prelude::*;
 use gtk::{Align::*, Orientation::*};
-use widgetbuilder::load_css;
 use std::time::Duration;
-use gtk::glib::*;
-use gtk::glib;
-use chrono::prelude::*;
+use widgetbuilder::load_css;
 
 // 5 sec update interval
 const UPDATE_INTERVAL: Duration = Duration::from_secs(5);
@@ -29,12 +29,9 @@ pub fn popoulate(container: &gtk::Box) {
         .spacing(0)
         .build();
 
-    let right = gtk::Box::builder()
-        .orientation(Vertical)
-        .spacing(0)
-        .build();
+    let right = gtk::Box::builder().orientation(Vertical).spacing(0).build();
 
-        let label_hour = gtk::Label::builder()
+    let label_hour = gtk::Label::builder()
         .valign(Start)
         .wrap(true)
         //.limit_width(25)
@@ -98,7 +95,7 @@ pub fn popoulate(container: &gtk::Box) {
 
             // Continue the timeout
             glib::Continue(true)
-        })
+        }),
     );
 }
 

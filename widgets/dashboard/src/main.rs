@@ -7,12 +7,12 @@ mod actions;
 use actions::*;
 
 // Widgets
-mod weather;
 mod clock;
 mod sysbtn;
-mod volume;
-mod webbtn;
 mod textboxnotes;
+mod volume;
+mod weather;
+mod webbtn;
 
 fn main() {
     let app = Application::builder().application_id(APP_ID).build();
@@ -51,29 +51,17 @@ pub fn build_ui(app: &Application) {
                 (notes)
     */
 
-    let container = gtk::Box::builder()
-        .orientation(Horizontal)
-        .build();
+    let container = gtk::Box::builder().orientation(Horizontal).build();
 
-    let left_container = gtk::Box::builder()
-        .orientation(Vertical)
-        .build();
+    let left_container = gtk::Box::builder().orientation(Vertical).build();
 
-    let right_container = gtk::Box::builder()
-        .orientation(Vertical)
-        .build();
+    let right_container = gtk::Box::builder().orientation(Vertical).build();
 
-    let left_row1 = gtk::Box::builder()
-        .orientation(Horizontal)
-        .build();
+    let left_row1 = gtk::Box::builder().orientation(Horizontal).build();
 
-    let left_row2 = gtk::Box::builder()
-        .orientation(Horizontal)
-        .build();
+    let left_row2 = gtk::Box::builder().orientation(Horizontal).build();
 
-    let left_row3 = gtk::Box::builder()
-        .orientation(Horizontal)
-        .build();
+    let left_row3 = gtk::Box::builder().orientation(Horizontal).build();
 
     // Shutdown button
     let shutdown_box = gtk::Box::builder().build();

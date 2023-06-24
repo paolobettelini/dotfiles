@@ -70,7 +70,8 @@ fn capitalize_each_word(input: &str) -> String {
             match chars.next() {
                 None => String::new(),
                 Some(first_char) => {
-                    let capitalized_word = first_char.to_uppercase().collect::<String>() + &chars.as_str().to_lowercase();
+                    let capitalized_word = first_char.to_uppercase().collect::<String>()
+                        + &chars.as_str().to_lowercase();
                     capitalized_word
                 }
             }

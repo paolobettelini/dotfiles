@@ -1,7 +1,7 @@
 use gtk::prelude::*;
 use gtk::Orientation::*;
-use std::process::{Stdio, Command};
-use std::io::{BufRead, BufReader};
+use std::process::{Command, Stdio};
+
 use widgetbuilder::load_css;
 
 pub fn popoulate(container: &gtk::Box) {
@@ -9,9 +9,7 @@ pub fn popoulate(container: &gtk::Box) {
     load_css(include_bytes!("style.css"));
 
     // Init UI
-    let inner_container = gtk::Box::builder()
-        .orientation(Vertical)
-        .build();
+    let inner_container = gtk::Box::builder().orientation(Vertical).build();
     inner_container.style_context().add_class("volume");
 
     let label = gtk::Label::new(Some("󰕾"));
