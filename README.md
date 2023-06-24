@@ -105,7 +105,7 @@ Personal scripts
 ### Dependencies
 ```bash
 # needed by dashboard volume manager
-sudo pacman -S alsa-utils
+sudo pacman -S alsa-utils jq
 ```
 
 ```bash
@@ -298,12 +298,25 @@ TODO
 sudo pacman -S tectonic
 ```
 
+# Latex-Rec
+```bash
+git clone https://github.com/paolobettelini/tauri-myscript-latex
+cd tauri-myscript-latex
+cargo tauri build
+sudo mv src-tauri/target/release/bundle/appimage/latex-rec_<v>.AppImage /usr/local/bin/latex-rec
+cd ..
+```
+
 <!--
 TODO:
 make code and firefox "fakefullscreen" when spawned
 make non floating window drabble without centering
 them around the cursor
 
+Prnters
+sudo pacman -S cups cups-pdf
+sudo systemctl enable cups.service
+sudo systemctl start cups.service
 
 fish -> exa
 hyprland -> swww
