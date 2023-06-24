@@ -12,6 +12,7 @@ mod clock;
 mod sysbtn;
 mod volume;
 mod webbtn;
+mod textboxnotes;
 
 fn main() {
     let app = Application::builder().application_id(APP_ID).build();
@@ -32,6 +33,7 @@ pub fn build_ui(app: &Application) {
     WidgetLayer::new(
         &window,
         false,
+        true,
         Anchor::Center,
         Anchor::Center,
         (400, 200),
@@ -46,6 +48,7 @@ pub fn build_ui(app: &Application) {
                     (volume + clock)
             weather_box
                 (weather)
+                (notes)
     */
 
     let container = gtk::Box::builder()
@@ -53,6 +56,10 @@ pub fn build_ui(app: &Application) {
         .build();
 
     let left_container = gtk::Box::builder()
+        .orientation(Vertical)
+        .build();
+
+    let right_container = gtk::Box::builder()
         .orientation(Vertical)
         .build();
 
@@ -134,10 +141,19 @@ pub fn build_ui(app: &Application) {
     weather_box.style_context().add_class("keepbackground");
     weather::popoulate(&weather_box);
 
+    // Textbox notes
+    let textbox_notes = gtk::Box::builder().build();
+    textbox_notes.style_context().add_class("margin1");
+    textbox_notes.style_context().add_class("keepbackground");
+    textboxnotes::popoulate(&textbox_notes);
+
     // Add elements
     left_container.add(&left_row1);
     left_container.add(&left_row2);
     left_container.add(&left_row3);
+
+    right_container.add(&weather_box);
+    right_container.add(&textbox_notes);
 
     left_row1.add(&shutdown_box);
     left_row1.add(&reboot_box);
@@ -153,7 +169,7 @@ pub fn build_ui(app: &Application) {
     left_row3.add(&github_box);
 
     container.add(&left_container);
-    container.add(&weather_box);
+    container.add(&right_container);
 
     window.set_child(Some(&container));
 

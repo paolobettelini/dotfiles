@@ -14,7 +14,6 @@ use cache::*;
 // 5 min update interval
 const UPDATE_INTERVAL: Duration = Duration::from_secs(300);
 
-// use trait also with load_css method
 pub fn popoulate(container: &gtk::Box) {
     // Init CSS
     load_css(include_bytes!("style.css"));

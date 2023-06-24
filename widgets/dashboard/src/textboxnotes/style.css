@@ -1,0 +1,10 @@
+#notes-editor {
+    padding: 10px;
+    color: #BF616A;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#notes-editor text:selected {
+    color: blue;
+}

@@ -2,6 +2,7 @@ use gtk::prelude::*;
 
 use gtk::ApplicationWindow;
 use gtk_layer_shell::Edge::*;
+use gtk_layer_shell::KeyboardMode;
 
 #[derive(Debug, Copy, Clone)]
 pub enum Anchor {
@@ -13,6 +14,7 @@ pub enum Anchor {
 #[derive(Debug)]
 pub struct WidgetLayer {
     exclusive: bool,
+    interactive_keyboard: bool,
     h_anchor: Anchor,
     v_anchor: Anchor,
     size: (i32, i32),
@@ -22,12 +24,14 @@ impl WidgetLayer {
     pub fn new(
         window: &ApplicationWindow,
         exclusive: bool,
+        interactive_keyboard: bool,
         h_anchor: Anchor,
         v_anchor: Anchor,
         size: (i32, i32),
     ) -> Self {
         let layer = Self {
             exclusive,
+            interactive_keyboard,
             h_anchor,
             v_anchor,
             size,
@@ -48,6 +52,8 @@ impl WidgetLayer {
         if self.exclusive {
             gtk_layer_shell::auto_exclusive_zone_enable(window);
         }
+
+        gtk_layer_shell::set_keyboard_interactivity(window, self.interactive_keyboard);
 
         Self::set_anchors(window, self.h_anchor, self.v_anchor);
     }
