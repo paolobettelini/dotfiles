@@ -104,15 +104,14 @@ Personal scripts
 
 ### Dependencies
 ```bash
-# needed by dashboard volume manager
-sudo pacman -S alsa-utils jq
+# alsa-utils needed by dashboard volume manager
+# jq needed by 
+# grim needed to take screenshots
+sudo pacman -S alsa-utils jq grim
 ```
 
 ```bash
 cd dotfiles
-cd scripts
-rustc -O workspace.rs
-cd ..
 sudo chmod +x scripts/*
 sudo cp scripts/* /usr/local/bin
 cd ..
@@ -179,13 +178,6 @@ sudo mv target/release/swww-daemon /usr/local/bin/
 ```
 To set the background run
 `swww img /path/to/wallpaper`.
-
-## Screenshots
-```bash
-sudo pacman -S grim
-```
-`grim` executes a screenshot.
-There are also other programs based on grim.
 
 ## Screen recording
 ```bash

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+# Take a screenshot using grim
+screenshot_file="/home/paolo/Screenshots/$(date +%Y%m%d-%H%M%S)".png
+grim "$screenshot_file"
+
+# Create a symbolic link to the latest screenshot
+ln -sf "$screenshot_file" /home/paolo/Screenshots/latest.png
