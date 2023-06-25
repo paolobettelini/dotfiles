@@ -1,6 +1,6 @@
 # A guide to my personal setup
 
-This guide contains everything I do to completly setup my distro.
+This guide contains everything I do to completely setup my distro.
 
 # Dashboard
 
