@@ -2,6 +2,12 @@
 
 This guide contains everything I do to completly setup my distro.
 
+# Dashboard
+
+![dashboard](media/dashboard.png)
+
+# Installation
+
 ## Install Arch Linux
 
 Download the Arch Linux ISO from the official website.
@@ -91,6 +97,7 @@ sudo pacman -S
     exa # alternative to "ls"
     swayimg # Image viewer with overlay
     celluloid # Video player
+    dunst # notifications
 paru -S gotop # system monitoring
 ```
 
