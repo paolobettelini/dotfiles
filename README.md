@@ -90,7 +90,6 @@ sudo pacman -S
     wireplumber
     slurp
     firefox # browser
-    discord # discord
     dolphin # file explorer
     gwenview # image viewer
     alacritty # terminal
@@ -99,6 +98,20 @@ sudo pacman -S
     celluloid # Video player
     dunst # notifications
 paru -S gotop # system monitoring
+```
+
+## xdg-desktop-portal
+```bash
+sudo pacman -S xdg-desktop-portal
+    xdg-desktop-portal-gtk # backend 1
+    xdg-desktop-portal-hyprland # backend 2
+```
+
+## Discord
+The program `discord-screenaudio` is a discord version that lets you stream with audio
+on Wayland.
+```bash
+paru -S discord-screenaudio
 ```
 
 ## Rust
