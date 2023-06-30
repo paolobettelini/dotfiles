@@ -190,7 +190,8 @@ Create a folder for your wallpapers
 sudo mkdir -p /usr/share/backgrounds
 ```
 Install `swww`
-# TODO use paru ?
+<!--  TODO use paru ?-->
+
 ```bash
 git clone https://github.com/Horus645/swww
 cd swww
@@ -261,20 +262,24 @@ sudo pacman -S qt6ct adwaita-qt6
 ```
 
 ### GTK Theme
-Download `Sweet.zip` from [here](https://github.com/EliverLara/Sweet/releases/latest)
+Download `Sweet-Dark-v40.zip` from [here](https://github.com/EliverLara/Sweet/releases/latest)
 ```bash
-unzip Sweet.zip
-sudo mv Sweet /usr/share/themes/
+unzip Sweet-Dark-v40.zip
+sudo mv Sweet-Dark-v40 /usr/share/themes/
 ```
-<!-- tokyo-night theme ?????? -->
+<!-- https://store.kde.org/p/1294174/ -->
 
 ### Apply theming
 ```bash
 paru -S nwg-look-bin
+# nwg-look handles GTK2 and GTK3
 nwg-look # select theme and icons
 qt5ct # select theme and icons
 qt6ct # select theme and icons
+# for GTK4
+gsettings set org.gnome.desktop.interface gtk-theme Sweet-Dark-v40
 ```
+The theme is also set in `hyprland.conf` at `env = GTK_THEME,Sweet-Dark-v40`.
 
 ## Plugins
 
