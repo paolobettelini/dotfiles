@@ -190,6 +190,7 @@ Create a folder for your wallpapers
 sudo mkdir -p /usr/share/backgrounds
 ```
 Install `swww`
+# TODO use paru ?
 ```bash
 git clone https://github.com/Horus645/swww
 cd swww
@@ -223,14 +224,22 @@ sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
 cd ..
 ```
 
-## Icons
-Download the icons from [here](https://www.gnome-look.org/p/1253385/)
-```bash
-sudo tar -xf ~/Downloads/Sweet.tar.xz -C /usr/share/icons
-```
-TODO
+## Theming
 
-## Fonts
+### Icons
+```bash
+sudo pacman -S hicolor-icon-theme # fallback icons
+sudo pacman -S adwaita-icon-theme
+```
+Download the `Candy Icons` icons
+from [here](https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip)
+```bash
+unzip candy-icons-master.zip
+sudo mv candy-icons-master /usr/share/icons/candy-icons
+```
+TODO Sweet folders from [here](https://github.com/EliverLara/Sweet-folders)
+
+### Fonts
 Download your font from
 [here](https://www.nerdfonts.com/font-downloads)
 (FantasqueSansMono Nerd Font)
@@ -245,18 +254,27 @@ sudo rm /usr/local/share/fonts/*.md
 
 TODO NotoColorEmoji.ttf
 
-## Themes
-
-### QT5
+### QT5 Theme
 ```bash
 sudo pacman -S qt5ct adwaita-qt5
 sudo pacman -S qt6ct adwaita-qt6
-qt5ct # select theme
-qt6ct # select theme
 ```
 
-### GTK
-TODO tokyo-night theme
+### GTK Theme
+Download `Sweet.zip` from [here](https://github.com/EliverLara/Sweet/releases/latest)
+```bash
+unzip Sweet.zip
+sudo mv Sweet /usr/share/themes/
+```
+<!-- tokyo-night theme ?????? -->
+
+### Apply theming
+```bash
+paru -S nwg-look-bin
+nwg-look # select theme and icons
+qt5ct # select theme and icons
+qt6ct # select theme and icons
+```
 
 ## Plugins
 

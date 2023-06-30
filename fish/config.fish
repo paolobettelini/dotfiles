@@ -10,8 +10,11 @@ rtfetch
 alias desktop='cd ~/Desktop'
 desktop
 
-alias remove-screenshots='rm ~/Screenshots/*'
-alias remove-downloads='rm -r ~/Downloads/*'
+alias delete-screenshots='rm ~/Screenshots/*'
+alias delete-downloads='rm -r ~/Downloads/*'
+alias delete-trash='gio trash --empty'
+
+alias record='wf-recorder -g "$(slurp)"'
 
 alias ls='exa -al --color=always --group-directories-first --icons' # preferred listing
 alias la='exa -a --color=always --group-directories-first --icons'  # all files and dirs
