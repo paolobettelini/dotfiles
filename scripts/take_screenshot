@@ -1,9 +1,8 @@
 #!/bin/bash
 
-
-# Take a screenshot using grim
-screenshot_file="/home/paolo/Screenshots/$(date +%Y%m%d-%H%M%S)".png
-grim "$screenshot_file"
+# Take a screenshot using grim and slurp
+screenshot_file="$HOME/Screenshots/$(date +%Y%m%d-%H%M%S)".png
+grim -g "$(slurp)" "$screenshot_file"
 
 # Create a symbolic link to the latest screenshot
-ln -sf "$screenshot_file" /home/paolo/Screenshots/latest.png
+ln -sf "$screenshot_file" $HOME/Screenshots/latest.png

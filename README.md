@@ -88,7 +88,6 @@ git clone https://github.com/paolobettelini/dotfiles
 sudo pacman -S
     pipewire
     wireplumber
-    slurp
     firefox # browser
     dolphin # file explorer
     gwenview # image viewer
@@ -126,8 +125,8 @@ Personal scripts
 ```bash
 # alsa-utils needed by dashboard volume manager
 # jq needed by 
-# grim needed to take screenshots
-sudo pacman -S alsa-utils jq grim
+# grim, slurp needed to take screenshots
+sudo pacman -S alsa-utils jq grim slurp
 ```
 
 ```bash
