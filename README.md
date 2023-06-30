@@ -96,6 +96,7 @@ sudo pacman -S
     swayimg # Image viewer with overlay
     celluloid # Video player
     dunst # notifications
+    cmatrix
 paru -S gotop # system monitoring
 ```
 
@@ -118,16 +119,17 @@ paru -S discord-screenaudio
 sudo pacman -S cargo
 ```
 
+## Various used and useful libraries
+```bash
+sudo pacman -S 
+    alsa-utils # audio system
+    jq # json parser
+    grim # screenshots
+    slurp # select a region of the compositor
+```
+
 ## Scripts
 Personal scripts
-
-### Dependencies
-```bash
-# alsa-utils needed by dashboard volume manager
-# jq needed by 
-# grim, slurp needed to take screenshots
-sudo pacman -S alsa-utils jq grim slurp
-```
 
 ```bash
 cd dotfiles
