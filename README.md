@@ -88,6 +88,7 @@ git clone https://github.com/paolobettelini/dotfiles
 sudo pacman -S
     pipewire
     wireplumber
+    piper # gaming mouse configuration
     firefox # browser
     dolphin # file explorer
     gwenview # image viewer
@@ -122,6 +123,7 @@ sudo pacman -S cargo
 ## Various used and useful libraries
 ```bash
 sudo pacman -S 
+    ntfs-3g # mount ntfs partitions
     alsa-utils # audio system
     jq # json parser
     grim # screenshots
@@ -267,7 +269,7 @@ Download `Sweet-Dark-v40.zip` from [here](https://github.com/EliverLara/Sweet/re
 unzip Sweet-Dark-v40.zip
 sudo mv Sweet-Dark-v40 /usr/share/themes/
 ```
-<!-- https://store.kde.org/p/1294174/ -->
+<!-- https://github.com/EliverLara/Sweet-kde ?????? -->
 
 ### Apply theming
 ```bash
