@@ -66,24 +66,28 @@ pub fn build_ui(app: &Application) {
     // Shutdown button
     let shutdown_box = gtk::Box::builder().build();
     shutdown_box.style_context().add_class("margin1");
+    shutdown_box.style_context().add_class("keepbackground");
     shutdown_box.set_widget_name("shutdown");
     sysbtn::popoulate(&shutdown_box, "⏻", shutdown);
 
     // Reboot button
     let reboot_box = gtk::Box::builder().build();
     reboot_box.style_context().add_class("margin1");
+    reboot_box.style_context().add_class("keepbackground");
     reboot_box.set_widget_name("reboot");
     sysbtn::popoulate(&reboot_box, "", reboot);
 
     // Suspend button
     let suspend_box = gtk::Box::builder().build();
     suspend_box.style_context().add_class("margin1");
+    suspend_box.style_context().add_class("keepbackground");
     suspend_box.set_widget_name("suspend");
     sysbtn::popoulate(&suspend_box, "", suspend);
 
     // Logout button
     let logout_box = gtk::Box::builder().build();
     logout_box.style_context().add_class("margin1");
+    logout_box.style_context().add_class("keepbackground");
     logout_box.set_widget_name("logout");
     sysbtn::popoulate(&logout_box, "󰗼", logout);
 
