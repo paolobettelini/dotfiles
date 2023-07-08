@@ -97,6 +97,7 @@ sudo pacman -S
     swayimg # Image viewer with overlay
     celluloid # Video player
     dunst # notifications
+    pacseek # navigate through aur
     cmatrix
 paru -S gotop # system monitoring
 ```
