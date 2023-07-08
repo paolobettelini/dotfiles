@@ -109,8 +109,14 @@ sudo pacman -S xdg-desktop-portal
 ```
 
 ## Discord
-The program `discord-screenaudio` is a discord version that lets you stream with audio
-on Wayland.
+```bash
+pacman -S discord-canary # discord with updated electron
+```
+
+The live streaming will work with `xwaylandvideobridge` (see below).
+<br>
+This cannot share audio, if you need to the program `discord-screenaudio` is a discord
+version that lets you stream with audio on Wayland.
 ```bash
 paru -S discord-screenaudio
 ```
@@ -235,6 +241,14 @@ cd ..
 sudo pacman -S cliphist
 ```
 <!-- exec-once + hotkey -->
+
+## Screen sharing
+See https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/
+(might easily change)
+```bash
+paru -S xwaylandvideobridge-cursor-mode-2-git
+```
+<!-- windowrules + exec-once -->
 
 ## Theming
 
