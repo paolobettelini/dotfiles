@@ -272,11 +272,12 @@ TODO NotoColorEmoji.ttf
 ```
 
 ### GTK Theme
-Download `Sweet-Dark-v40.zip` from [here](https://github.com/EliverLara/Sweet/releases/latest)
+Download the source code from [here](https://github.com/EliverLara/Sweet/tree/nova)
+(branch:`nova`)
 ```bash
-unzip Sweet-Dark-v40.zip
-sudo mv Sweet-Dark-v40 /usr/share/themes/
-sudo chown -R root:root /usr/share/themes/Sweet-Dark-v40
+unzip Sweet-nova.zip
+sudo mv Sweet-nova /usr/share/themes/Sweet-Nova
+sudo chown -R root:root /usr/share/themes/Sweet-Nova
 ```
 
 ### Apply theming
