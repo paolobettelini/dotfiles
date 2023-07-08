@@ -113,6 +113,15 @@ sudo pacman -S xdg-desktop-portal
 pacman -S discord-canary # discord with updated electron
 ```
 
+### OpenAsar
+[OpenAsar](https://openasar.dev/)
+```bash
+paru -S openasar-git
+```
+
+Using `OpenAsar` you can choose a theme
+from [here](https://betterdiscord.app/themes) and upload it in the settings.
+
 The live streaming will work with `xwaylandvideobridge` (see below).
 <br>
 This cannot share audio, if you need to the program `discord-screenaudio` is a discord
