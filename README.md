@@ -152,6 +152,9 @@ cp -r hyprland/* ~/.config/hypr/
 cd ..
 ```
 
+## Chaotic-Aur
+Follow the instructions at [https://aur.chaotic.cx/](https://aur.chaotic.cx/)
+
 ## Rtfetch
 ```bash
 git clone https://github.com/paolobettelini/rtfetch
@@ -227,6 +230,12 @@ sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
 cd ..
 ```
 
+## Clipboard manager
+```bash
+sudo pacman -S cliphist
+```
+<!-- exec-once + hotkey -->
+
 ## Theming
 
 ### Icons
@@ -257,10 +266,9 @@ sudo rm /usr/local/share/fonts/*.md
 
 TODO NotoColorEmoji.ttf
 
-### QT5 Theme
+### QT Theme
 ```bash
-sudo pacman -S qt5ct adwaita-qt5
-sudo pacman -S qt6ct adwaita-qt6
+# 
 ```
 
 ### GTK Theme
@@ -268,8 +276,8 @@ Download `Sweet-Dark-v40.zip` from [here](https://github.com/EliverLara/Sweet/re
 ```bash
 unzip Sweet-Dark-v40.zip
 sudo mv Sweet-Dark-v40 /usr/share/themes/
+sudo chown -R root:root /usr/share/themes/Sweet-Dark-v40
 ```
-<!-- https://github.com/EliverLara/Sweet-kde ?????? -->
 
 ### Apply theming
 ```bash
@@ -279,7 +287,6 @@ nwg-look # select theme and icons
 qt5ct # select theme and icons
 qt6ct # select theme and icons
 # for GTK4
-gsettings set org.gnome.desktop.interface gtk-theme Sweet-Dark-v40
 ```
 The theme is also set in `hyprland.conf` at `env = GTK_THEME,Sweet-Dark-v40`.
 

@@ -2,7 +2,7 @@
 
 # Take a screenshot using grim and slurp
 screenshot_file="$HOME/Screenshots/$(date +%Y%m%d-%H%M%S)".png
-grim -g "$(slurp)" "$screenshot_file"
+grim -g "$(slurp)" "$screenshot_file" | wl-copy
 
 # Create a symbolic link to the latest screenshot
 ln -sf "$screenshot_file" $HOME/Screenshots/latest.png
