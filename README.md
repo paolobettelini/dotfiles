@@ -223,6 +223,16 @@ sudo mv target/release/swww-daemon /usr/local/bin/
 To set the background run
 `swww img /path/to/wallpaper`.
 
+## Neovim
+```bash
+sudo pacman -S neovim
+mkdir ~/.config/nvim
+cd ~/.config/nvim
+
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
+
 ## Screen recording
 ```bash
 pacman -S wf-recorder
