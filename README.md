@@ -99,6 +99,9 @@ sudo pacman -S
     dunst # notifications
     pacseek # navigate through aur
     cmatrix
+    nmap
+    ripgrep
+    dysk # disk info
 paru -S gotop # system monitoring
 ```
 
