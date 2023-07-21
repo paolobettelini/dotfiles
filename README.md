@@ -15,7 +15,8 @@ Burn the ISO file to a USB medium.
 ```bash
 sudo dd bs=4M if=/path/to/iso of=/dev/usb conv=fdatasync
 ```
-Live CD into the USB and run `archinstall`. Proceed with the installation.
+Live CD into the USB and run `archinstall` (or, do it the [hard way](https://wiki.archlinux.org/title/installation_guide)).
+Proceed with the installation.
 No desktop enviroment is needed.
 
 ## Wi-FI
@@ -77,6 +78,9 @@ cd ..
 rm -r paru
 ```
 
+## Chaotic-Aur
+Follow the instructions at [https://aur.chaotic.cx/](https://aur.chaotic.cx/)
+
 ## Download the dotfiles
 Download the dotfiles from this repository.
 ```bash
@@ -100,8 +104,13 @@ sudo pacman -S
     pacseek # navigate through aur
     cmatrix
     nmap
-    ripgrep
     dysk # disk info
+    ripgrep
+    ntfs-3g # mount ntfs partitions (driver)
+    alsa-utils # audio system
+    jq # json parser
+    grim # screenshots
+    slurp # select a region of the compositor
 paru -S gotop # system monitoring
 ```
 
@@ -118,7 +127,7 @@ pacman -S discord-canary # discord with updated electron
 ```
 
 ### OpenAsar
-[OpenAsar](https://openasar.dev/)
+[OpenAsar](https://openasar.dev/) is a plugin for discord
 ```bash
 paru -S openasar-git
 ```
@@ -137,16 +146,6 @@ paru -S discord-screenaudio
 ## Rust
 ```bash
 sudo pacman -S cargo
-```
-
-## Various used and useful libraries
-```bash
-sudo pacman -S 
-    ntfs-3g # mount ntfs partitions
-    alsa-utils # audio system
-    jq # json parser
-    grim # screenshots
-    slurp # select a region of the compositor
 ```
 
 ## Scripts
@@ -171,9 +170,6 @@ cp -r hyprland/* ~/.config/hypr/
 cd ..
 ```
 
-## Chaotic-Aur
-Follow the instructions at [https://aur.chaotic.cx/](https://aur.chaotic.cx/)
-
 ## Rtfetch
 ```bash
 git clone https://github.com/paolobettelini/rtfetch
@@ -181,6 +177,7 @@ cd rtfetch
 cargo build --release
 sudo mv target/release/rtfetch /usr/local/bin
 ```
+
 
 ## Fish (shell)
 ```bash
@@ -227,6 +224,7 @@ To set the background run
 `swww img /path/to/wallpaper`.
 
 ## Neovim
+TODO
 ```bash
 sudo pacman -S neovim
 mkdir ~/.config/nvim
