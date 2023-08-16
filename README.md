@@ -70,7 +70,7 @@ git config --global commit.gpgsign true
 
 ## Rust
 ```bash
-sudo pacman -S cargo rustup
+sudo pacman -S cargo rustup rust-analyzer
 rustup default stable
 ```
 
@@ -117,6 +117,8 @@ sudo pacman -S
     jq # json parser
     grim # screenshots
     slurp # select a region of the compositor
+    unzip
+    gimp
 paru -S
     gotop # system monitoring
     pacseek # navigate through aur
@@ -237,15 +239,9 @@ To set the background run
 ## Neovim
 TODO
 ```bash
-sudo pacman -S neovim
-mkdir ~/.config/nvim
-cd ~/.config/nvim
-
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+sudo pacman -S neovim npm
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
 ```
-
-## NvChad
 
 ## Screen recording
 ```bash
@@ -307,7 +303,7 @@ Download your font from
 ```bash
 sudo mkdir -p /usr/local/share/fonts
 sudo unzip -a ~/Downloads/DejaVuSansMono.zip -d /usr/local/share/fonts/
-/usr/local/share/fonts/
+sudo unzip -a ~/Downloads/FantasqueSansMono.zip -d /usr/local/share/fonts/
 sudo rm /usr/local/share/fonts/*.txt
 sudo rm /usr/local/share/fonts/*.md
 ```
@@ -367,6 +363,7 @@ The plugin is initialized in the `hyprland` config.
 ## Widgets
 ```bash
 cd dotfiles/widgets/dashboard
+sudo pacman -S gtk4 gtk-layer-shell
 cargo b --release
 sudo mv target/release/dashboard /usr/local/bin/
 cd ../..
