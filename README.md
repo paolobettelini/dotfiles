@@ -68,6 +68,13 @@ git config --global user.signingkey <KEY>
 git config --global commit.gpgsign true 
 ```
 
+## Rust
+```bash
+sudo pacman -S cargo rustup
+rustup default stable
+```
+
+
 ## Installing Paru (AUR helper)
 ```bash
 sudo pacman -S --needed base-devel
@@ -94,14 +101,13 @@ sudo pacman -S
     wireplumber
     piper # gaming mouse configuration
     firefox # browser
-    dolphin # file explorer
+    nautilus # file explorer
     gwenview # image viewer
     alacritty # terminal
     exa # alternative to "ls"
     swayimg # Image viewer with overlay
     celluloid # Video player
     dunst # notifications
-    pacseek # navigate through aur
     cmatrix
     nmap
     dysk # disk info
@@ -111,7 +117,9 @@ sudo pacman -S
     jq # json parser
     grim # screenshots
     slurp # select a region of the compositor
-paru -S gotop # system monitoring
+paru -S
+    gotop # system monitoring
+    pacseek # navigate through aur
 ```
 
 ## xdg-desktop-portal
@@ -143,11 +151,6 @@ version that lets you stream with audio on Wayland.
 paru -S discord-screenaudio
 ```
 
-## Rust
-```bash
-sudo pacman -S cargo
-```
-
 ## Scripts
 Personal scripts
 
@@ -174,6 +177,7 @@ cd ..
 ```bash
 git clone https://github.com/paolobettelini/rtfetch
 cd rtfetch
+rustup default nightly
 cargo build --release
 sudo mv target/release/rtfetch /usr/local/bin
 ```
@@ -186,6 +190,9 @@ cd dotfiles
 
 mkdir -p ~/.config/starship
 mkdir -p ~/.config/fish
+
+fish
+exit
 
 cat fish/config.fish >> ~/.config/fish/config.fish
 cp starship/starship.toml ~/.config/starship/
@@ -209,6 +216,10 @@ To start it run `rofi -show drun`.
 Create a folder for your wallpapers
 ```bash
 sudo mkdir -p /usr/share/backgrounds
+
+cd dotfiles
+sudo cp wallpapers/* /usr/share/backgrounds/
+cd ..
 ```
 Install `swww`
 <!--  TODO use paru ?-->
@@ -233,6 +244,8 @@ cd ~/.config/nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
+
+## NvChad
 
 ## Screen recording
 ```bash
