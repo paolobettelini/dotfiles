@@ -2,10 +2,10 @@
 # Starship prompt
 if status --is-interactive
    source ("/usr/bin/starship" init fish --print-full-init | psub)
-end
 
-# Rtfetch
-rtfetch
+   # Rtfetch
+   rtfetch
+end
 
 alias desktop='cd ~/Desktop'
 desktop

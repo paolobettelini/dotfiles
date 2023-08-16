@@ -70,7 +70,7 @@ git config --global commit.gpgsign true
 
 ## Rust
 ```bash
-sudo pacman -S cargo rustup rust-analyzer
+sudo pacman -S cargo rustup
 rustup default stable
 ```
 
@@ -237,10 +237,16 @@ To set the background run
 `swww img /path/to/wallpaper`.
 
 ## Neovim
-TODO
 ```bash
-sudo pacman -S neovim npm
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+sudo pacman -S neovim npm lldbR
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+nvim
+# No example
+cd dotfiles
+cp -r nvim/custom ~/.config/nvim/lua
+nvim
+# :MesonInstallAll
+cd ..
 ```
 
 ## Screen recording
