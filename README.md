@@ -100,7 +100,7 @@ sudo pacman -S
     pipewire
     wireplumber
     piper # gaming mouse configuration
-    firefox # browser
+    firefox-nightly # browser
     nautilus # file explorer
     gwenview # image viewer
     alacritty # terminal
