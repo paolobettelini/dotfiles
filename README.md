@@ -343,28 +343,12 @@ The theme is also set in `hyprland.conf` at `env = GTK_THEME,Sweet-Dark-v40`.
 
 ## Plugins
 
-### Prepare enviroment
 ```bash
-sudo pacman -S cpio # needed by pluginenv
-paru -S libdisplay-info # I don't know if you need this
+hyprpm update
 
-git clone --recursive https://github.com/hyprwm/Hyprland
-cd Hyprland
-git reset --hard (hyprctl version | grep "commit" | awk '{print $8}' | sed 's/dirty$//')
-sudo make pluginenv
-export HYPRLAND_HEADERS=(pwd)
-cd ..
-mkdir /usr/share/plugins # Place for your plugins (.so files)
+hyprpm add https://github.com/Duckonaut/split-monitor-workspaces
+hyprpm enable split-monitor-workspaces
 ```
-
-### Install plugin(s)
-```bash
-git clone https://github.com/paolobettelini/split-monitor-workspaces
-cd split-monitor-workspaces
-make all
-sudo mv split-monitor-workspaces.so /usr/share/plugins/
-```
-The plugin is initialized in the `hyprland` config.
 
 ## Widgets
 ```bash
