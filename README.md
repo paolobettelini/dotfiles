@@ -206,7 +206,7 @@ chsh -s /bin/fish
 
 ## Application launcher
 ```bash
-sudo pacman -S rofi
+sudo pacman -S rofi-lbonn-wayland
 mkdir -p ~/.config/rofi
 cd dotfiles
 cp rofi/config.rasi ~/.config/rofi/
