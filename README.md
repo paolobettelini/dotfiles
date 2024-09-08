@@ -165,7 +165,7 @@ cd ..
 
 ## Hyprland
 ```bash
-paru -S hyprland-git
+pacman -S hyprland
 ```
 Copy the dotfiles
 ```bash
@@ -206,7 +206,7 @@ chsh -s /bin/fish
 
 ## Application launcher
 ```bash
-sudo pacman -S rofi-lbonn-wayland
+sudo pacman -S rofi-lbonn-wayland-git
 mkdir -p ~/.config/rofi
 cd dotfiles
 cp rofi/config.rasi ~/.config/rofi/
@@ -266,7 +266,7 @@ sudo cp sddm/sddm.conf /etc/sddm.conf.d/
 Download the theme from [here](https://www.opendesktop.org/p/1312658)
 ```bash
 sudo mkdir -p /usr/share/sddm/themes/*
-sudo rm -r /usr/share/sddm/themes/*
+sudo rm -rf /usr/share/sddm/themes/*
 sudo tar -xzvf ~/Downloads/sugar-candy.tar.gz -C /usr/share/sddm/themes
 sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
 cd ..
@@ -332,7 +332,7 @@ sudo chown -R root:root /usr/share/themes/Sweet-Nova
 
 ### Apply theming
 ```bash
-paru -S nwg-look-bin
+pacman -S nwg-look
 # nwg-look handles GTK2 and GTK3
 nwg-look # select theme and icons
 qt5ct # select theme and icons
