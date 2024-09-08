@@ -119,6 +119,8 @@ sudo pacman -S
     slurp # select a region of the compositor
     unzip
     gimp
+    nano
+    wget
 paru -S
     gotop # system monitoring
     pacseek # navigate through aur
