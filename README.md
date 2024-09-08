@@ -256,7 +256,7 @@ pacman -S wf-recorder
 
 ## SDDM (Display manager)
 ```bash
-paru -S sddm-git
+pacman -S sddm libqt5xdg qt5-quickcontrols2 qt5-graphicaleffects qt5-svg
 sudo systemctl enable sddm
 
 sudo mkdir -p /etc/sddm.conf.d
