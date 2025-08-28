@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Take a screenshot (region select with grim+slurp), pipe to zbarimg
+qr_url=$(grim -g "$(slurp)" - | zbarimg --quiet --raw - 2>/dev/null)
+
+if [[ -n "$qr_url" ]]; then
+  echo "QR Code detected: $qr_url"
+  # Copy to clipboard
+  wl-copy <<< "$qr_url"
+else
+  echo "No QR code detected."
+fi

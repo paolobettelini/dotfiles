@@ -117,6 +117,8 @@ sudo pacman -S
     jq # json parser
     grim # screenshots
     slurp # select a region of the compositor
+    swww # wallpaper handler
+    zbar # qr code scan
     unzip
     gimp
     nano
@@ -224,16 +226,6 @@ sudo mkdir -p /usr/share/backgrounds
 cd dotfiles
 sudo cp wallpapers/* /usr/share/backgrounds/
 cd ..
-```
-Install `swww`
-<!--  TODO use paru ?-->
-
-```bash
-git clone https://github.com/Horus645/swww
-cd swww
-cargo build --release
-sudo mv target/release/swww /usr/local/bin/
-sudo mv target/release/swww-daemon /usr/local/bin/
 ```
 To set the background run
 `swww img /path/to/wallpaper`.
