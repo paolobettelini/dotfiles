@@ -123,6 +123,7 @@ sudo pacman -S
     gimp
     nano
     wget
+    obs-studio wlrobs-hg
 paru -S
     gotop # system monitoring
     pacseek # navigate through aur
@@ -272,12 +273,6 @@ sudo pacman -S cliphist
 ```
 <!-- exec-once + hotkey -->
 
-## Screen sharing
-See https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/
-(might easily change)
-```bash
-paru -S xwaylandvideobridge-cursor-mode-2-git
-```
 <!-- windowrules + exec-once -->
 
 ## Theming
