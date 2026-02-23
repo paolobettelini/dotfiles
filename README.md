@@ -124,6 +124,7 @@ sudo pacman -S
     nano
     wget
     obs-studio wlrobs-hg
+    xournalpp rnote
 paru -S
     gotop # system monitoring
     pacseek # navigate through aur
