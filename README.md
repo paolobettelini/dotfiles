@@ -456,7 +456,7 @@ The GTK and QT environment variables are configured in:
 ```bash
 cd dotfiles/widgets/dashboard
 
-sudo pacman -S gtk4 gtk-layer-shell
+sudo pacman -S gtk4 gtk-layer-shell gtk4-layer-shell
 
 cargo build --release
 

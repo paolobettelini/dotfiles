@@ -1,120 +1,65 @@
-use chrono::prelude::*;
-use gtk::glib;
-use gtk::glib::*;
+use chrono::Local;
+use gtk::glib::{self, ControlFlow};
 use gtk::prelude::*;
-use gtk::{Align::*, Orientation::*};
-use std::time::Duration;
-use widgetbuilder::load_css;
 
-// 5 sec update interval
-const UPDATE_INTERVAL: Duration = Duration::from_secs(5);
+pub fn build() -> gtk::Box {
+    let root = gtk::Box::new(gtk::Orientation::Horizontal, 50);
+    root.add_css_class("tile");
+    root.add_css_class("card");
+    root.add_css_class("clock-card");
+    root.set_vexpand(false);
+    root.set_hexpand(false);
 
-pub fn popoulate(container: &gtk::Box) {
-    // Init CSS
-    load_css(include_bytes!("style.css"));
-    container.set_widget_name("clock");
+    let time_box = gtk::Box::new(gtk::Orientation::Horizontal, 0);
+    let details = gtk::Box::new(gtk::Orientation::Vertical, 0);
 
-    // Init UI
+    let hour = gtk::Label::new(None);
+    let minute = gtk::Label::new(None);
+    let meridiem = gtk::Label::new(None);
+    let day = gtk::Label::new(None);
 
-    let inner_container = gtk::Box::builder()
-        .orientation(Horizontal)
-        .spacing(50)
-        //.spave_evenyl(50)
-        .vexpand(false)
-        .hexpand(false)
-        .build();
+    hour.add_css_class("clock-hour");
+    minute.add_css_class("clock-minute");
+    meridiem.add_css_class("clock-meridiem");
+    day.add_css_class("clock-day");
 
-    let left = gtk::Box::builder()
-        .orientation(Horizontal)
-        .spacing(0)
-        .build();
+    hour.set_valign(gtk::Align::Start);
+    minute.set_valign(gtk::Align::End);
+    meridiem.set_valign(gtk::Align::Start);
+    meridiem.set_halign(gtk::Align::End);
+    day.set_valign(gtk::Align::End);
+    day.set_halign(gtk::Align::End);
 
-    let right = gtk::Box::builder().orientation(Vertical).spacing(0).build();
+    time_box.append(&hour);
+    time_box.append(&minute);
+    details.append(&meridiem);
+    details.append(&day);
+    root.append(&time_box);
+    root.append(&details);
 
-    let label_hour = gtk::Label::builder()
-        .valign(Start)
-        .wrap(true)
-        //.limit_width(25)
-        .build();
-    label_hour.set_widget_name("time_hour");
-    label_hour.set_text(&get_hour());
+    update_labels(&hour, &minute, &meridiem, &day);
 
-    let label_min = gtk::Label::builder()
-        .valign(End)
-        .wrap(true)
-        //.limit_width(25)
-        .build();
-    label_min.set_widget_name("time_min");
-    label_min.set_text(&get_minute());
+    let hour_tick = hour.clone();
+    let minute_tick = minute.clone();
+    let meridiem_tick = meridiem.clone();
+    let day_tick = day.clone();
+    glib::timeout_add_seconds_local(5, move || {
+        update_labels(&hour_tick, &minute_tick, &meridiem_tick, &day_tick);
+        ControlFlow::Continue
+    });
 
-    let label_mer = gtk::Label::builder()
-        .valign(Start)
-        .halign(End)
-        //.limit_width(25)
-        .wrap(true)
-        .build();
-    label_mer.set_widget_name("time_mer");
-    label_mer.set_text(&get_am_pm());
-
-    let label_day = gtk::Label::builder()
-        .valign(End)
-        .halign(End)
-        //.limit_width(25)
-        .wrap(true)
-        .build();
-    label_day.set_widget_name("time_day");
-    label_day.set_text(&get_day_of_week());
-
-    container.add(&inner_container);
-
-    inner_container.add(&left);
-    inner_container.add(&right);
-
-    left.add(&label_hour);
-    left.add(&label_min);
-
-    right.add(&label_mer);
-    right.add(&label_day);
-
-    // Interval loop
-
-    glib::timeout_add_local(
-        UPDATE_INTERVAL,
-        clone!(
-            @weak label_hour,
-            @weak label_min,
-            @weak label_mer,
-            @weak label_day
-            => @default-return Continue(false), move || {
-
-            // Update values
-            label_min.set_text(&get_hour());
-            label_min.set_text(&get_minute());
-            label_mer.set_text(&get_am_pm());
-            label_day.set_text(&get_day_of_week());
-
-            // Continue the timeout
-            glib::Continue(true)
-        }),
-    );
+    root
 }
 
-fn get_hour() -> String {
-    let local = Local::now();
-    local.format("%I").to_string()
-}
-
-fn get_minute() -> String {
-    let local = Local::now();
-    local.format("%M").to_string()
-}
-
-fn get_am_pm() -> String {
-    let local = Local::now();
-    local.format("%p").to_string()
-}
-
-fn get_day_of_week() -> String {
-    let local = Local::now();
-    local.format("%A").to_string()
+fn update_labels(
+    hour: &gtk::Label,
+    minute: &gtk::Label,
+    meridiem: &gtk::Label,
+    day: &gtk::Label,
+) {
+    let now = Local::now();
+    hour.set_text(&now.format("%I").to_string());
+    minute.set_text(&now.format("%M").to_string());
+    meridiem.set_text(&now.format("%p").to_string());
+    day.set_text(&now.format("%A").to_string());
 }

@@ -1,25 +1,24 @@
+use crate::actions::ActionResult;
 use gtk::prelude::*;
-use gtk::Orientation::*;
 
-use widgetbuilder::load_css;
-
-pub fn popoulate(container: &gtk::Box, icon: &str, action: fn() -> ()) {
-    // Init CSS
-    load_css(include_bytes!("style.css"));
-
-    // Init UI
-    let inner_container = gtk::Box::builder().orientation(Vertical).build();
-    inner_container.style_context().add_class("sysbtn");
-
-    let button = gtk::Button::builder()
-        .label(icon)
-        //.timeout(60s) ???
-        .build();
+pub fn build(
+    symbol: &str,
+    tooltip: &str,
+    css_class: &str,
+    action: fn() -> ActionResult,
+) -> gtk::Button {
+    let button = gtk::Button::with_label(symbol);
+    button.add_css_class("tile");
+    button.add_css_class("action-button");
+    button.add_css_class("icon-glyph");
+    button.add_css_class(css_class);
+    button.set_tooltip_text(Some(tooltip));
 
     button.connect_clicked(move |_| {
-        action();
+        if let Err(error) = action() {
+            eprintln!("dashboard action failed: {error}");
+        }
     });
 
-    container.add(&inner_container);
-    inner_container.add(&button);
+    button
 }

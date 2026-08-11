@@ -1,58 +1,204 @@
-* {
-    border: unset;
-    border-radius: 10px;
-}
-
-.keepbackground {
-    /* TODO take it from the theme */
-    background-color: rgb(54, 54, 54);
-}
-
-:not(.keepbackground) {
+/*
+ * The window and the layout itself are deliberately transparent. Only the
+ * individual tiles paint a background, matching the original GTK3 dashboard.
+ * Everything is scoped below .dashboard-window/.dashboard-root so a desktop
+ * theme cannot accidentally turn unrelated GTK widgets transparent.
+ */
+window.dashboard-window,
+window.dashboard-window.background,
+.dashboard-window,
+.dashboard-root,
+.dashboard-left,
+.dashboard-right {
     background-color: transparent;
+    background-image: none;
+    box-shadow: none;
 }
 
-.margin1 {
-    margin: 5px 5px 5px 5px;
+.dashboard-root {
+    color: #e5e9f0;
 }
 
-#weather {
+/* Stable tile geometry: this replaces the old global .margin1 selector. */
+.dashboard-root .tile {
+    margin: 5px;
+}
+
+.dashboard-root .card,
+.dashboard-root .action-button {
+    background-color: rgb(54, 54, 54);
+    background-image: none;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* Private-use glyphs used by the original dashboard/Nerd Fonts. */
+.dashboard-root .icon-glyph,
+.dashboard-root .weather-icon,
+.dashboard-root .volume-icon {
+    font-family: "Symbols Nerd Font Mono", "Symbols Nerd Font", "JetBrainsMono Nerd Font", "FiraCode Nerd Font", "Hack Nerd Font", monospace;
+}
+
+/* System actions: original size/proportions. */
+.dashboard-root .action-button {
+    min-width: 130px;
+    min-height: 130px;
+    padding: 0;
+    font-size: 75px;
+    font-weight: normal;
+}
+
+.dashboard-root .action-button:hover {
+    color: #ffd5cd;
+}
+
+
+.dashboard-root .action-shutdown { color: #d35d6e; }
+.dashboard-root .action-reboot { color: #84afdb; }
+.dashboard-root .action-suspend { color: #c47eb7; }
+.dashboard-root .action-logout { color: #90c861; }
+
+/* Volume: same 130px column and large speaker glyph as GTK3. */
+.dashboard-root .volume-card {
+    min-width: 130px;
+}
+
+.dashboard-root .volume-icon {
+    color: #4a93bb;
+    font-size: 50px;
+}
+
+.dashboard-root .volume-scale {
+    margin: 0 10px 6px 10px;
+}
+
+.dashboard-root .volume-scale value {
+    margin-top: 10px;
+}
+
+.dashboard-root .volume-scale trough {
+    min-height: 6px;
+    border-radius: 5px;
+}
+
+.dashboard-root .volume-scale slider {
+    min-width: 16px;
+    min-height: 16px;
+    border-radius: 8px;
+}
+
+/* Clock: preserve the original 130 + 410 = 540px middle-row split. */
+.dashboard-root .clock-card {
+    min-width: 410px;
+}
+
+.dashboard-root .clock-hour,
+.dashboard-root .clock-minute {
+    color: #81a1c1;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.dashboard-root .clock-hour {
+    margin: 15px 0 0 20px;
+}
+
+.dashboard-root .clock-minute {
+    margin: 0 0 10px 0;
+}
+
+.dashboard-root .clock-meridiem {
+    color: #a3be8c;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 20px 10px 0 0;
+}
+
+.dashboard-root .clock-day {
+    color: #ebcb8b;
+    font-size: 30px;
+    font-weight: normal;
+    margin: 0 10px 20px -20px;
+}
+
+/* Social shortcuts: restore the original glyphs and 130x130 cells. */
+.dashboard-root .web-button {
+    min-width: 130px;
+    min-height: 130px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
+    color: #ffffff;
+    font-size: 80px;
+    font-weight: normal;
+    background-image: none;
+}
+
+
+.dashboard-root .web-youtube { background-color: #f93636; }
+.dashboard-root .web-reddit { background-color: #e46231; }
+.dashboard-root .web-whatsapp { background-color: #28a219; }
+.dashboard-root .web-github { background-color: #24292e; }
+
+/* Weather: original large icon/temperature/description proportions. */
+.dashboard-root .weather-card {
+    min-width: 390px;
     padding-bottom: 15px;
-    margin: 5px 5px 5px 5px;
 }
 
-/* Sys buttons */
-
-#reboot button {
-    color: #84afdb;
+.dashboard-root .weather-icon {
+    font-size: 120px;
+    font-weight: normal;
+    margin: 15px 0 0 30px;
 }
 
-#shutdown button {
-    color: #D35D6E;
+.dashboard-root .weather-temperature {
+    color: #a6d1dd;
+    font-size: 80px;
+    font-weight: bold;
+    margin: 0 30px 0 0;
 }
 
-#suspend button {
-    color: #c47eb7;
+.dashboard-root .weather-description {
+    color: #bf616a;
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 12px;
 }
 
-#logout button {
-    color: #90c861;
+.dashboard-root .weather-clear-day { color: #ffd86b; }
+.dashboard-root .weather-clear-night { color: #fcdcf6; }
+.dashboard-root .weather-partly-cloudy { color: #adadff; }
+.dashboard-root .weather-cloudy { color: #adadff; }
+.dashboard-root .weather-rain { color: #6b95ff; }
+.dashboard-root .weather-thunder { color: #ffeb57; }
+.dashboard-root .weather-snow { color: #e3e6fc; }
+.dashboard-root .weather-fog { color: #84afdb; }
+.dashboard-root .weather-unknown { color: #adadff; }
+
+/* Notes deliberately have no header/status chrome. */
+.dashboard-root .notes-card {
+    min-width: 390px;
+    min-height: 150px;
 }
 
-/* Web buttons */
-
-#github {
-    background-color: #24292E;
+.dashboard-root .notes-scroller,
+.dashboard-root .notes-scroller viewport,
+.dashboard-root .notes-editor,
+.dashboard-root .notes-editor text {
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
 }
 
-#reddit {
-    background-color: #E46231;
-}
-
-#youtube {
-    background-color: #f93636;
-}
-
-#whatsapp {
-    background-color: #28a219;
+.dashboard-root .notes-editor,
+.dashboard-root .notes-editor text {
+    color: #d8dee9;
+    font-size: 15px;
+    font-weight: bold;
 }

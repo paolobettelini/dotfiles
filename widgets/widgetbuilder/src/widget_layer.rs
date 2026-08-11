@@ -1,8 +1,8 @@
 use gtk::prelude::*;
-
 use gtk::ApplicationWindow;
-use gtk_layer_shell::Edge::*;
-use gtk_layer_shell::KeyboardMode;
+
+#[cfg(feature = "wayland")]
+use gtk4_layer_shell::{Edge, KeyboardMode, Layer, LayerShell};
 
 #[derive(Debug, Copy, Clone)]
 pub enum Anchor {
@@ -11,88 +11,101 @@ pub enum Anchor {
     End(i32),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct WidgetLayer {
     exclusive: bool,
     interactive_keyboard: bool,
     h_anchor: Anchor,
     v_anchor: Anchor,
-    size: (i32, i32),
+    default_size: Option<(i32, i32)>,
+    namespace: String,
 }
 
 impl WidgetLayer {
     pub fn new(
-        window: &ApplicationWindow,
         exclusive: bool,
         interactive_keyboard: bool,
         h_anchor: Anchor,
         v_anchor: Anchor,
-        size: (i32, i32),
     ) -> Self {
-        let layer = Self {
+        Self {
             exclusive,
             interactive_keyboard,
             h_anchor,
             v_anchor,
-            size,
-        };
-
-        layer.adapt_window(window);
-
-        layer
+            default_size: None,
+            namespace: "dashboard".to_string(),
+        }
     }
 
-    pub fn adapt_window(&self, window: &ApplicationWindow) {
-        gtk_layer_shell::init_for_window(window);
+    pub fn with_default_size(mut self, width: i32, height: i32) -> Self {
+        self.default_size = Some((width, height));
+        self
+    }
 
-        window.set_default_size(self.size.0, self.size.1);
+    pub fn with_namespace(mut self, namespace: impl Into<String>) -> Self {
+        self.namespace = namespace.into();
+        self
+    }
+
+    pub fn apply(&self, window: &ApplicationWindow) {
         window.set_resizable(false);
         window.set_decorated(false);
 
-        if self.exclusive {
-            gtk_layer_shell::auto_exclusive_zone_enable(window);
+        if let Some((width, height)) = self.default_size {
+            window.set_default_size(width, height);
         }
 
-        gtk_layer_shell::set_keyboard_interactivity(window, self.interactive_keyboard);
+        self.apply_backend(window);
+    }
+
+    #[cfg(feature = "wayland")]
+    fn apply_backend(&self, window: &ApplicationWindow) {
+        window.init_layer_shell();
+        window.set_namespace(Some(self.namespace.as_str()));
+        window.set_layer(Layer::Overlay);
+        window.set_keyboard_mode(if self.interactive_keyboard {
+            KeyboardMode::OnDemand
+        } else {
+            KeyboardMode::None
+        });
+
+        if self.exclusive {
+            window.auto_exclusive_zone_enable();
+        } else {
+            window.set_exclusive_zone(0);
+        }
 
         Self::set_anchors(window, self.h_anchor, self.v_anchor);
     }
 
-    pub fn set_anchors(window: &ApplicationWindow, h_anchor: Anchor, v_anchor: Anchor) {
+    #[cfg(not(feature = "wayland"))]
+    fn apply_backend(&self, _window: &ApplicationWindow) {}
+
+    #[cfg(feature = "wayland")]
+    fn set_anchors(window: &ApplicationWindow, h_anchor: Anchor, v_anchor: Anchor) {
         match h_anchor {
             Anchor::Start(margin) => {
-                gtk_layer_shell::set_anchor(window, Left, true);
-                gtk_layer_shell::set_margin(window, Left, margin);
+                window.set_anchor(Edge::Left, true);
+                window.set_margin(Edge::Left, margin);
             }
             Anchor::Center => {}
             Anchor::End(margin) => {
-                gtk_layer_shell::set_anchor(window, Right, true);
-                gtk_layer_shell::set_margin(window, Right, margin);
+                window.set_anchor(Edge::Right, true);
+                window.set_margin(Edge::Right, margin);
             }
         }
 
         match v_anchor {
             Anchor::Start(margin) => {
-                gtk_layer_shell::set_anchor(window, Top, true);
-                gtk_layer_shell::set_margin(window, Top, margin);
+                window.set_anchor(Edge::Top, true);
+                window.set_margin(Edge::Top, margin);
             }
             Anchor::Center => {}
             Anchor::End(margin) => {
-                gtk_layer_shell::set_anchor(window, Bottom, true);
-                gtk_layer_shell::set_margin(window, Bottom, margin);
+                window.set_anchor(Edge::Bottom, true);
+                window.set_margin(Edge::Bottom, margin);
             }
         }
     }
 }
-
-/*
-    gtk_layer_shell::set_namespace(&window, namespace);
-    gtk_layer_shell::set_keyboard_interactivity(&window, window_def.backend_options.wayland.focusable);
-
-    match window_def.stacking {
-        WindowStacking::Foreground => gtk_layer_shell::set_layer(&window, gtk_layer_shell::Layer::Top),
-        WindowStacking::Background => gtk_layer_shell::set_layer(&window, gtk_layer_shell::Layer::Background),
-        WindowStacking::Bottom => gtk_layer_shell::set_layer(&window, gtk_layer_shell::Layer::Bottom),
-        WindowStacking::Overlay => gtk_layer_shell::set_layer(&window, gtk_layer_shell::Layer::Overlay),
-    }
-*/

@@ -1,12 +1,13 @@
-use gtk::{prelude::*, Application, ApplicationWindow, Orientation::*};
-use widgetbuilder::{load_css, widget_layer::*};
+use gtk::prelude::*;
+use gtk::{Application, ApplicationWindow, Orientation};
+use widgetbuilder::{
+    load_css,
+    widget_layer::{Anchor, WidgetLayer},
+};
 
 const APP_ID: &str = "ch.bettelini.paolo.Dashboard";
 
 mod actions;
-use actions::*;
-
-// Widgets
 mod clock;
 mod sysbtn;
 mod textboxnotes;
@@ -14,156 +15,123 @@ mod volume;
 mod weather;
 mod webbtn;
 
-fn main() {
+fn main() -> gtk::glib::ExitCode {
     let app = Application::builder().application_id(APP_ID).build();
-    app.connect_activate(move |app| build_ui(&app));
-    app.run();
+    app.connect_activate(build_ui);
+    app.run()
 }
 
-pub fn build_ui(app: &Application) {
+fn build_ui(app: &Application) {
+    if let Some(window) = app.active_window() {
+        window.present();
+        return;
+    }
+
+    load_css(include_str!("style.css"));
+
     let window = ApplicationWindow::builder()
         .application(app)
         .title("Dashboard")
         .build();
+    window.add_css_class("dashboard-window");
 
-    // Load CSS
-    load_css(include_bytes!("style.css"));
+    WidgetLayer::new(false, true, Anchor::Center, Anchor::Center)
+        .with_namespace("paolo-dashboard")
+        .apply(&window);
 
-    // Dashboard geometry
-    WidgetLayer::new(
-        &window,
-        false,
-        true,
-        Anchor::Center,
-        Anchor::Center,
-        (400, 200),
-    );
+    let escape = gtk::EventControllerKey::new();
+    let window_escape = window.clone();
+    escape.connect_key_pressed(move |_, key, _, _| {
+        if key == gtk::gdk::Key::Escape {
+            window_escape.close();
+            gtk::glib::Propagation::Stop
+        } else {
+            gtk::glib::Propagation::Proceed
+        }
+    });
+    window.add_controller(escape);
 
-    /*
-        container
-            left_container
-                left_row1
-                    (btn1 + btn2 + btn3 + btn4)
-                left_row2
-                    (volume + clock)
-            weather_box
-                (weather)
-                (notes)
-    */
+    // Keep the same geometry as the GTK3 dashboard: three rows on the left,
+    // weather + notes on the right. Spacing lives on each tile (5px per side),
+    // so the 130px/410px proportions stay stable across GTK themes.
+    let root = gtk::Box::new(Orientation::Horizontal, 0);
+    root.add_css_class("dashboard-root");
 
-    let container = gtk::Box::builder().orientation(Horizontal).build();
+    let left = gtk::Box::new(Orientation::Vertical, 0);
+    left.add_css_class("dashboard-left");
 
-    let left_container = gtk::Box::builder().orientation(Vertical).build();
+    let right = gtk::Box::new(Orientation::Vertical, 0);
+    right.add_css_class("dashboard-right");
+    right.set_vexpand(true);
 
-    let right_container = gtk::Box::builder().orientation(Vertical).build();
+    let system_row = gtk::Box::new(Orientation::Horizontal, 0);
+    system_row.set_homogeneous(true);
+    system_row.append(&sysbtn::build(
+        "⏻",
+        "Shut down",
+        "action-shutdown",
+        actions::shutdown,
+    ));
+    system_row.append(&sysbtn::build(
+        "",
+        "Reboot",
+        "action-reboot",
+        actions::reboot,
+    ));
+    system_row.append(&sysbtn::build(
+        "",
+        "Suspend",
+        "action-suspend",
+        actions::suspend,
+    ));
+    system_row.append(&sysbtn::build(
+        "󰗼",
+        "Log out of Hyprland",
+        "action-logout",
+        actions::logout,
+    ));
 
-    let left_row1 = gtk::Box::builder().orientation(Horizontal).build();
+    let middle_row = gtk::Box::new(Orientation::Horizontal, 0);
+    middle_row.append(&volume::build());
+    middle_row.append(&clock::build());
 
-    let left_row2 = gtk::Box::builder().orientation(Horizontal).build();
+    let web_row = gtk::Box::new(Orientation::Horizontal, 0);
+    web_row.set_homogeneous(true);
+    web_row.append(&webbtn::build(
+        "",
+        "YouTube",
+        "https://www.youtube.com/",
+        "web-youtube",
+    ));
+    web_row.append(&webbtn::build(
+        "樓",
+        "Reddit",
+        "https://www.reddit.com/",
+        "web-reddit",
+    ));
+    web_row.append(&webbtn::build(
+        "",
+        "WhatsApp Web",
+        "https://web.whatsapp.com/",
+        "web-whatsapp",
+    ));
+    web_row.append(&webbtn::build(
+        "",
+        "GitHub",
+        "https://github.com/",
+        "web-github",
+    ));
 
-    let left_row3 = gtk::Box::builder().orientation(Horizontal).build();
+    left.append(&system_row);
+    left.append(&middle_row);
+    left.append(&web_row);
 
-    // Shutdown button
-    let shutdown_box = gtk::Box::builder().build();
-    shutdown_box.style_context().add_class("margin1");
-    shutdown_box.style_context().add_class("keepbackground");
-    shutdown_box.set_widget_name("shutdown");
-    sysbtn::popoulate(&shutdown_box, "⏻", shutdown);
+    right.append(&weather::build());
+    right.append(&textboxnotes::build());
 
-    // Reboot button
-    let reboot_box = gtk::Box::builder().build();
-    reboot_box.style_context().add_class("margin1");
-    reboot_box.style_context().add_class("keepbackground");
-    reboot_box.set_widget_name("reboot");
-    sysbtn::popoulate(&reboot_box, "", reboot);
+    root.append(&left);
+    root.append(&right);
+    window.set_child(Some(&root));
 
-    // Suspend button
-    let suspend_box = gtk::Box::builder().build();
-    suspend_box.style_context().add_class("margin1");
-    suspend_box.style_context().add_class("keepbackground");
-    suspend_box.set_widget_name("suspend");
-    sysbtn::popoulate(&suspend_box, "", suspend);
-
-    // Logout button
-    let logout_box = gtk::Box::builder().build();
-    logout_box.style_context().add_class("margin1");
-    logout_box.style_context().add_class("keepbackground");
-    logout_box.set_widget_name("logout");
-    sysbtn::popoulate(&logout_box, "󰗼", logout);
-
-    // Volume
-    let volume_box = gtk::Box::builder().build();
-    volume_box.style_context().add_class("keepbackground");
-    volume_box.style_context().add_class("margin1");
-    volume::popoulate(&volume_box);
-
-    // Clock
-    let clock_box = gtk::Box::builder().build();
-    clock_box.style_context().add_class("margin1");
-    clock_box.style_context().add_class("keepbackground");
-    clock::popoulate(&clock_box);
-
-    // Youtube
-    let youtube_box = gtk::Box::builder().build();
-    youtube_box.style_context().add_class("margin1");
-    youtube_box.set_widget_name("youtube");
-    webbtn::popoulate(&youtube_box, "", open_youtube);
-
-    // Reddit
-    let reddit_box = gtk::Box::builder().build();
-    reddit_box.style_context().add_class("margin1");
-    reddit_box.set_widget_name("reddit");
-    webbtn::popoulate(&reddit_box, "樓", open_reddit);
-
-    // Whatsapp
-    let whatsapp_box = gtk::Box::builder().build();
-    whatsapp_box.style_context().add_class("margin1");
-    whatsapp_box.set_widget_name("whatsapp");
-    webbtn::popoulate(&whatsapp_box, "", open_whatsapp);
-
-    // GitHub
-    let github_box = gtk::Box::builder().build();
-    github_box.style_context().add_class("margin1");
-    github_box.set_widget_name("github");
-    webbtn::popoulate(&github_box, "", open_github);
-
-    // Weather widget
-    let weather_box = gtk::Box::builder().build();
-    weather_box.set_widget_name("weather");
-    weather_box.style_context().add_class("keepbackground");
-    weather::popoulate(&weather_box);
-
-    // Textbox notes
-    let textbox_notes = gtk::Box::builder().build();
-    textbox_notes.style_context().add_class("margin1");
-    textbox_notes.style_context().add_class("keepbackground");
-    textboxnotes::popoulate(&textbox_notes);
-
-    // Add elements
-    left_container.add(&left_row1);
-    left_container.add(&left_row2);
-    left_container.add(&left_row3);
-
-    right_container.add(&weather_box);
-    right_container.add(&textbox_notes);
-
-    left_row1.add(&shutdown_box);
-    left_row1.add(&reboot_box);
-    left_row1.add(&suspend_box);
-    left_row1.add(&logout_box);
-
-    left_row2.add(&volume_box);
-    left_row2.add(&clock_box);
-
-    left_row3.add(&youtube_box);
-    left_row3.add(&reddit_box);
-    left_row3.add(&whatsapp_box);
-    left_row3.add(&github_box);
-
-    container.add(&left_container);
-    container.add(&right_container);
-
-    window.set_child(Some(&container));
-
-    window.show_all();
+    window.present();
 }

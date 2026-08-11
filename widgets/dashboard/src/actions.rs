@@ -1,60 +1,46 @@
+use gtk::gio;
+use std::env;
 use std::process::Command;
 
-pub fn shutdown() {
-    println!("Shutting down");
+pub type ActionResult = Result<(), String>;
 
-    Command::new("systemctl")
-        .args(&["poweroff"])
-        .spawn()
-        .expect("Failed to execute shutdown command.");
+pub fn shutdown() -> ActionResult {
+    spawn_command("systemctl", &["poweroff"])
 }
 
-pub fn reboot() {
-    println!("Rebooting");
-
-    Command::new("systemctl")
-        .args(&["reboot"])
-        .spawn()
-        .expect("Failed to execute reboot command.");
+pub fn reboot() -> ActionResult {
+    spawn_command("systemctl", &["reboot"])
 }
 
-pub fn logout() {
-    println!("Logout not yet implemented");
+pub fn suspend() -> ActionResult {
+    spawn_command("systemctl", &["suspend"])
 }
 
-pub fn suspend() {
-    println!("Suspending");
-
-    Command::new("systemctl")
-        .args(&["suspend"])
+pub fn logout() -> ActionResult {
+    if Command::new("hyprctl")
+        .args(["dispatch", "exit"])
         .spawn()
-        .expect("Failed to execute suspend command.");
+        .is_ok()
+    {
+        return Ok(());
+    }
+
+    if let Ok(session) = env::var("XDG_SESSION_ID") {
+        return spawn_command("loginctl", &["terminate-session", &session]);
+    }
+
+    Err("could not start hyprctl and XDG_SESSION_ID is unavailable".to_string())
 }
 
-pub fn open_reddit() {
-    Command::new("firefox")
-        .args(&["--new-tab", "https://www.reddit.com/"])
-        .spawn()
-        .expect("Failed to execute firefox command.");
+pub fn open_url(url: &str) -> ActionResult {
+    gio::AppInfo::launch_default_for_uri(url, None::<&gio::AppLaunchContext>)
+        .map_err(|error| format!("failed to open {url}: {error}"))
 }
 
-pub fn open_youtube() {
-    Command::new("firefox")
-        .args(&["--new-tab", "https://www.youtube.com/"])
+fn spawn_command(program: &str, args: &[&str]) -> ActionResult {
+    Command::new(program)
+        .args(args)
         .spawn()
-        .expect("Failed to execute firefox command.");
-}
-
-pub fn open_whatsapp() {
-    Command::new("firefox")
-        .args(&["--new-tab", "https://web.whatsapp.com/"])
-        .spawn()
-        .expect("Failed to execute firefox command.");
-}
-
-pub fn open_github() {
-    Command::new("firefox")
-        .args(&["--new-tab", "https://github.com/"])
-        .spawn()
-        .expect("Failed to execute firefox command.");
+        .map(|_| ())
+        .map_err(|error| format!("failed to execute {program}: {error}"))
 }

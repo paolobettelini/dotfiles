@@ -1,28 +1,19 @@
+use crate::actions;
 use gtk::prelude::*;
 
-use widgetbuilder::load_css;
+pub fn build(label: &str, tooltip: &str, url: &'static str, css_class: &str) -> gtk::Button {
+    let button = gtk::Button::with_label(label);
+    button.add_css_class("tile");
+    button.add_css_class("web-button");
+    button.add_css_class("icon-glyph");
+    button.add_css_class(css_class);
+    button.set_tooltip_text(Some(tooltip));
 
-pub fn popoulate(container: &gtk::Box, icon: &str, action: fn() -> ()) {
-    // Init CSS
-    load_css(include_bytes!("style.css"));
-
-    // Init UI
-    let inner_container = gtk::Box::builder().build();
-    inner_container.style_context().add_class("webbtn");
-    let event_box = gtk::EventBox::builder()
-        .width_request(130)
-        .hexpand(false)
-        .build();
-
-    let label = gtk::Label::new(Some(icon));
-    label.set_hexpand(true);
-
-    event_box.connect_button_press_event(move |_, _| {
-        action();
-        Inhibit(false)
+    button.connect_clicked(move |_| {
+        if let Err(error) = actions::open_url(url) {
+            eprintln!("dashboard link failed: {error}");
+        }
     });
 
-    container.add(&inner_container);
-    inner_container.add(&event_box);
-    event_box.add(&label);
+    button
 }

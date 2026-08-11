@@ -358,7 +358,6 @@ local function open_dashboard()
         ]])
 
     end, {
-        timeout = 150,
         type = "oneshot",
     })
 end
