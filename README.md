@@ -12,15 +12,20 @@ This guide contains everything I do to completely setup my distro.
 
 Download the Arch Linux ISO from the official website.
 Burn the ISO file to a USB medium.
+
 ```bash
 sudo dd bs=4M if=/path/to/iso of=/dev/usb conv=fdatasync
 ```
-Live CD into the USB and run `archinstall` (or, do it the [hard way](https://wiki.archlinux.org/title/installation_guide)).
-Proceed with the installation.
-No desktop enviroment is needed.
 
-## Wi-FI
+Live CD into the USB and run `archinstall` (or, do it the [hard way](https://wiki.archlinux.org/title/Installation_guide)).
+
+Proceed with the installation.
+No desktop environment is needed.
+
+## Wi-Fi
+
 If you need to connect to a Wi-Fi network you can use `iwctl`.
+
 ```bash
 systemctl enable iwd
 systemctl start iwd
@@ -31,6 +36,7 @@ iwctl
 ## Git
 
 ### Basic configuration
+
 ```bash
 sudo pacman -S git
 git config --global user.name <user>
@@ -42,39 +48,47 @@ git config --global user.email <email>
 ```bash
 # Create the key pair
 gpg2 --expert --full-gen-key
+
 # or import them
 gpg2 --import public.gpg
 gpg2 --import private.gpg
 ```
 
-Get the uid of the key using
+Get the uid of the key using:
+
 ```bash
 gpg2 --list-secret-keys
 ```
 
-If you created the key pair, export the public key
+If you created the key pair, export the public key:
+
 ```bash
 gpg2 --export --armor --output public.gpg <KEY>
 ```
 
-Import the key to your profile
-at [https://github.com/settings/keys](https://github.com/settings/keys)
-and set up git
+Import the key to your profile at:
+
+https://github.com/settings/keys
+
+and set up git:
+
 ```bash
 rm public.gpg
 git config --global --unset gpg.program
 git config --global --add gpg.program /usr/bin/gpg2
 git config --global user.signingkey <KEY>
-git config --global commit.gpgsign true 
+git config --global commit.gpgsign true
 ```
 
 ## Rust
+
 ```bash
 sudo pacman -S cargo rustup
 rustup default stable
 ```
 
 ## Installing Paru (AUR helper)
+
 ```bash
 sudo pacman -S --needed base-devel
 git clone https://aur.archlinux.org/paru.git
@@ -84,65 +98,74 @@ cd ..
 rm -r paru
 ```
 
-## Chaotic-Aur
-Follow the instructions at [https://aur.chaotic.cx/](https://aur.chaotic.cx/)
+## Chaotic-AUR
+
+Follow the instructions at:
+
+https://aur.chaotic.cx/
 
 ## Download the dotfiles
-Download the dotfiles from this repository.
+
 ```bash
 git clone https://github.com/paolobettelini/dotfiles
 ```
 
 ## Common packages
+
 ```bash
-sudo pacman -S
-    pipewire
-    wireplumber
-    piper # gaming mouse configuration
-    firefox-nightly # browser
-    nautilus # file explorer
-    gwenview # image viewer
-    alacritty # terminal
-    exa # alternative to "ls"
-    swayimg # Image viewer with overlay
-    celluloid # Video player
-    dunst # notifications
-    cmatrix
-    nmap
-    dysk # disk info
-    ripgrep
-    ntfs-3g # mount ntfs partitions (driver)
-    alsa-utils # audio system
-    jq # json parser
-    grim # screenshots
-    slurp # select a region of the compositor
-    awww # wallpaper handler
-    zbar # qr code scan
-    unzip
-    gimp
-    nano
-    wget
-    obs-studio wlrobs-hg
-    xournalpp rnote
-paru -S
-    gotop # system monitoring
-    pacseek # navigate through aur
+sudo pacman -S \
+    pipewire \
+    wireplumber \
+    piper \
+    nautilus \
+    gwenview \
+    alacritty \
+    eza \
+    swayimg \
+    celluloid \
+    dunst \
+    cmatrix \
+    nmap \
+    dysk \
+    ripgrep \
+    ntfs-3g \
+    alsa-utils \
+    jq \
+    grim \
+    slurp \
+    awww \
+    zbar \
+    unzip \
+    gimp \
+    nano \
+    wget \
+    obs-studio \
+    xournalpp \
+    rnote
+
+paru -S \
+    firefox-nightly \
+    wlrobs-hg \
+    gotop \
+    pacseek
 ```
 
 ## xdg-desktop-portal
+
 ```bash
-sudo pacman -S xdg-desktop-portal
-    xdg-desktop-portal-gtk # backend 1
-    xdg-desktop-portal-hyprland # backend 2
+sudo pacman -S \
+    xdg-desktop-portal \
+    xdg-desktop-portal-gtk \
+    xdg-desktop-portal-hyprland
 ```
 
 ## Discord
+
 ```bash
-pacman -S discord-canary # discord with updated electron
+paru -S discord-canary
 ```
 
 ## Scripts
-Personal scripts
 
 ```bash
 cd dotfiles
@@ -152,10 +175,13 @@ cd ..
 ```
 
 ## Hyprland
+
 ```bash
-pacman -S hyprland
+sudo pacman -S hyprland
 ```
-Copy the dotfiles
+
+Copy the configuration:
+
 ```bash
 cd dotfiles
 mkdir -p ~/.config/hypr
@@ -163,19 +189,51 @@ cp -r hyprland/* ~/.config/hypr/
 cd ..
 ```
 
+The main configuration file is:
+
+```text
+~/.config/hypr/hyprland.lua
+```
+
+### split-monitor-workspaces
+
+```bash
+mkdir -p ~/.config/hypr/plugins
+cd ~/.config/hypr/plugins
+
+git clone https://github.com/zjeffer/split-monitor-workspaces
+cd split-monitor-workspaces
+
+git checkout release/0.56.x
+
+cd ~
+```
+
+Make sure the selected branch matches the installed Hyprland version.
+
+Reload the configuration:
+
+```bash
+hyprctl reload
+hyprctl configerrors
+```
+
 ## Rtfetch
+
 ```bash
 git clone https://github.com/paolobettelini/rtfetch
 cd rtfetch
 rustup default nightly
 cargo build --release
 sudo mv target/release/rtfetch /usr/local/bin
+cd ..
 ```
 
-
 ## Fish (shell)
+
 ```bash
 sudo pacman -S fish starship
+
 cd dotfiles
 
 mkdir -p ~/.config/starship
@@ -186,24 +244,38 @@ exit
 
 cat fish/config.fish >> ~/.config/fish/config.fish
 cp starship/starship.toml ~/.config/starship/
+
+cd ..
 ```
-You can now set fish as the default shell
+
+Set fish as the default shell:
+
 ```bash
 chsh -s /bin/fish
 ```
 
 ## Application launcher
+
 ```bash
-sudo pacman -S rofi-lbonn-wayland-git
+paru -S rofi-lbonn-wayland-git
+
 mkdir -p ~/.config/rofi
+
 cd dotfiles
 cp rofi/config.rasi ~/.config/rofi/
 cd ..
 ```
-To start it run `rofi -show drun`.
 
-## Wallpapers (animated or static)
-Create a folder for your wallpapers
+To start it run:
+
+```bash
+rofi -show drun
+```
+
+## Wallpapers
+
+Create a folder for the wallpapers:
+
 ```bash
 sudo mkdir -p /usr/share/backgrounds
 
@@ -211,91 +283,152 @@ cd dotfiles
 sudo cp wallpapers/* /usr/share/backgrounds/
 cd ..
 ```
-To set the background run
-`awww img /path/to/wallpaper`.
+
+To set the background:
+
+```bash
+awww img /path/to/wallpaper
+```
 
 ## Neovim
+
 ```bash
-sudo pacman -S neovim npm lldbR
+sudo pacman -S neovim npm lldb
+
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+
 nvim
-# No example
+
 cd dotfiles
 cp -r nvim/custom ~/.config/nvim/lua
-nvim
-# :MesonInstallAll
 cd ..
+
+nvim
 ```
 
 ## Screen recording
+
 ```bash
-pacman -S wf-recorder
+sudo pacman -S wf-recorder
 ```
 
-## SDDM (Display manager)
-```bash
-pacman -S sddm libqt5xdg qt5-quickcontrols2 qt5-graphicaleffects qt5-svg
-sudo systemctl enable sddm
+## SDDM
 
+```bash
+sudo pacman -S \
+    sddm \
+    libqt5xdg \
+    qt5-quickcontrols2 \
+    qt5-graphicaleffects \
+    qt5-svg
+
+sudo systemctl enable sddm
+```
+
+Copy the configuration:
+
+```bash
 sudo mkdir -p /etc/sddm.conf.d
+
 cd dotfiles
 sudo cp sddm/sddm.conf /etc/sddm.conf.d/
+cd ..
 ```
-Download the theme from [here](https://www.opendesktop.org/p/1312658)
+
+Download the theme from:
+
+https://www.opendesktop.org/p/1312658
+
+Install it:
+
 ```bash
-sudo mkdir -p /usr/share/sddm/themes/*
+sudo mkdir -p /usr/share/sddm/themes
 sudo rm -rf /usr/share/sddm/themes/*
-sudo tar -xzvf ~/Downloads/sugar-candy.tar.gz -C /usr/share/sddm/themes
-sudo cp sddm/theme.conf.user /usr/share/sddm/themes/sugar-candy
+
+sudo tar -xzvf \
+    ~/Downloads/sugar-candy.tar.gz \
+    -C /usr/share/sddm/themes
+
+cd dotfiles
+
+sudo cp \
+    sddm/theme.conf.user \
+    /usr/share/sddm/themes/sugar-candy
+
 cd ..
 ```
 
 ## Clipboard manager
+
 ```bash
 sudo pacman -S cliphist
 ```
-<!-- exec-once + hotkey -->
-
-<!-- windowrules + exec-once -->
 
 ## Theming
 
 ### Icons
+
 ```bash
-sudo pacman -S hicolor-icon-theme # fallback icons
-sudo pacman -S adwaita-icon-theme
+sudo pacman -S \
+    hicolor-icon-theme \
+    adwaita-icon-theme
 ```
-Download the `Candy Icons` icons
-from [here](https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip)
+
+Download Candy Icons from:
+
+https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip
+
 ```bash
 unzip candy-icons-master.zip
 sudo mv candy-icons-master /usr/share/icons/candy-icons
 ```
-TODO Sweet folders from [here](https://github.com/EliverLara/Sweet-folders)
+
+TODO Sweet folders:
+
+https://github.com/EliverLara/Sweet-folders
 
 ### Fonts
-Download your font from
-[here](https://www.nerdfonts.com/font-downloads)
-(FantasqueSansMono Nerd Font)
-(DejaVuSansMono Nerd Font)
+
+Download the fonts from:
+
+https://www.nerdfonts.com/font-downloads
+
+* FantasqueSansMono Nerd Font
+* DejaVuSansMono Nerd Font
+
 ```bash
 sudo mkdir -p /usr/local/share/fonts
-sudo unzip -a ~/Downloads/DejaVuSansMono.zip -d /usr/local/share/fonts/
-sudo unzip -a ~/Downloads/FantasqueSansMono.zip -d /usr/local/share/fonts/
+
+sudo unzip -a \
+    ~/Downloads/DejaVuSansMono.zip \
+    -d /usr/local/share/fonts/
+
+sudo unzip -a \
+    ~/Downloads/FantasqueSansMono.zip \
+    -d /usr/local/share/fonts/
+
 sudo rm /usr/local/share/fonts/*.txt
 sudo rm /usr/local/share/fonts/*.md
+
+sudo fc-cache -fv
 ```
 
 TODO NotoColorEmoji.ttf
 
 ### QT Theme
+
 ```bash
-# 
+sudo pacman -S qt5ct qt6ct
 ```
 
 ### GTK Theme
-Download the source code from [here](https://github.com/EliverLara/Sweet/tree/nova)
-(branch:`nova`)
+
+Download the source code from:
+
+https://github.com/EliverLara/Sweet/tree/nova
+
+Branch: `nova`
+
 ```bash
 unzip Sweet-nova.zip
 sudo mv Sweet-nova /usr/share/themes/Sweet-Nova
@@ -303,59 +436,79 @@ sudo chown -R root:root /usr/share/themes/Sweet-Nova
 ```
 
 ### Apply theming
+
 ```bash
-pacman -S nwg-look
-# nwg-look handles GTK2 and GTK3
-nwg-look # select theme and icons
-qt5ct # select theme and icons
-qt6ct # select theme and icons
-# for GTK4
+sudo pacman -S nwg-look
+
+nwg-look
+qt5ct
+qt6ct
 ```
-The theme is also set in `hyprland.conf` at `env = GTK_THEME,Sweet-Dark-v40`.
 
-## Plugins
+The GTK and QT environment variables are configured in:
 
-```bash
-hyprpm update
-
-hyprpm add https://github.com/Duckonaut/split-monitor-workspaces
-hyprpm enable split-monitor-workspaces
+```text
+~/.config/hypr/hyprland.lua
 ```
 
 ## Widgets
+
 ```bash
 cd dotfiles/widgets/dashboard
+
 sudo pacman -S gtk4 gtk-layer-shell
-cargo b --release
+
+cargo build --release
+
 sudo mv target/release/dashboard /usr/local/bin/
+
 cd ../..
 ```
-TODO Api key, city ...
 
-TODO install qt5-wayland or qt6-wayland 
+Set the weather configuration in `hyprland/hyprland.lua`:
+
+```lua
+hl.env("WEATHER_API_KEY", "<key>>")
+hl.env("WEATHER_LOCATION", "London,uk")
+hl.env("WEATHER_UNITS", "metric")
+```
+
+TODO install qt5-wayland or qt6-wayland.
 
 ## MPD
+
 ```bash
 sudo pacman -S mpc mpd
+
 mkdir -p ~/.config/mpd
 mkdir -p ~/.mpd
+
 cd dotfiles
 cp mpd/mpd.conf ~/.config/mpd/mpd.conf
 cd ..
+
 systemctl --user enable mpd.service
 ```
+
 TODO
 
 ## LaTeX
+
 ```bash
 sudo pacman -S tectonic
 ```
 
 # Latex-Rec
+
 ```bash
 git clone https://github.com/paolobettelini/tauri-myscript-latex
 cd tauri-myscript-latex
+
 cargo tauri build
-sudo mv src-tauri/target/release/bundle/appimage/latex-rec_<v>.AppImage /usr/local/bin/latex-rec
+
+sudo mv \
+    src-tauri/target/release/bundle/appimage/latex-rec_<v>.AppImage \
+    /usr/local/bin/latex-rec
+
 cd ..
 ```
