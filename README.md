@@ -74,7 +74,6 @@ sudo pacman -S cargo rustup
 rustup default stable
 ```
 
-
 ## Installing Paru (AUR helper)
 ```bash
 sudo pacman -S --needed base-devel
@@ -117,7 +116,7 @@ sudo pacman -S
     jq # json parser
     grim # screenshots
     slurp # select a region of the compositor
-    swww # wallpaper handler
+    awww # wallpaper handler
     zbar # qr code scan
     unzip
     gimp
@@ -140,23 +139,6 @@ sudo pacman -S xdg-desktop-portal
 ## Discord
 ```bash
 pacman -S discord-canary # discord with updated electron
-```
-
-### OpenAsar
-[OpenAsar](https://openasar.dev/) is a plugin for discord
-```bash
-paru -S openasar-git
-```
-
-Using `OpenAsar` you can choose a theme
-from [here](https://betterdiscord.app/themes) and upload it in the settings.
-
-The live streaming will work with `xwaylandvideobridge` (see below).
-<br>
-This cannot share audio, if you need to the program `discord-screenaudio` is a discord
-version that lets you stream with audio on Wayland.
-```bash
-paru -S discord-screenaudio
 ```
 
 ## Scripts
@@ -230,7 +212,7 @@ sudo cp wallpapers/* /usr/share/backgrounds/
 cd ..
 ```
 To set the background run
-`swww img /path/to/wallpaper`.
+`awww img /path/to/wallpaper`.
 
 ## Neovim
 ```bash
@@ -377,19 +359,3 @@ cargo tauri build
 sudo mv src-tauri/target/release/bundle/appimage/latex-rec_<v>.AppImage /usr/local/bin/latex-rec
 cd ..
 ```
-
-<!--
-TODO:
-make code and firefox "fakefullscreen" when spawned
-make non floating window drabble without centering
-them around the cursor
-
-Prnters
-sudo pacman -S cups cups-pdf
-sudo systemctl enable cups.service
-sudo systemctl start cups.service
-
-fish -> exa
-hyprland -> swww
-fish -> rtfetch
--->
