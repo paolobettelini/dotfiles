@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+WALLS="$HOME/Pictures/wallpapers"
+STATE="$HOME/.local/state/pocket-wallfx/current"
+mkdir -p "$(dirname "$STATE")"
+
+pick() {
+  qs -c pocket-wallfx ipc call wallpicker toggle
+}
+
+case "${1:-pick}" in
+  pick) pick; exit $? ;;
+  set) img="${2:?Usage: pocket-wallpaper set /path/to/file}" ;;
+  *) echo 'Usage: pocket-wallpaper [pick|set /path/to/file]' >&2; exit 2 ;;
+esac
+img="$(realpath "$img")"
+[[ -f "$img" ]] || { echo "Not found: $img" >&2; exit 1; }
+
+# Prefer persisted state, then awww query; this allows first launch without prior picks.
+old=''
+[[ -s "$STATE" ]] && old="$(cat "$STATE")"
+if [[ ! -f "$old" ]]; then
+  old="$(awww query 2>/dev/null | sed -n 's/.*currently displaying: image: //p' | head -n 1 || true)"
+fi
+
+if [[ -n "$old" && -f "$old" && "$old" != "$img" ]]; then
+  if choice="$("$HOME/.local/bin/wallfx" elige "$img" 2>/dev/null)"; then
+    read -r kind map line <<< "$choice"
+    if [[ -f "${map:-}" && -f "${line:-}" ]]; then
+      result="$(qs -c pocket-wallfx ipc call wallfx play "$old" "$img" "$kind" "$map" "$line" 2>&1 || true)"
+      if [[ "$result" == *ok* ]]; then
+        printf '%s\n' "$img" > "$STATE"
+        exit 0
+      fi
+      printf "WallFX IPC reply: %s\n" "$result" >&2
+    else
+      echo "WallFX map files are missing: $choice" >&2
+    fi
+  else
+    echo "WallFX could not generate a transition map" >&2
+  fi
+fi
+awww img "$img" --transition-type fade --transition-duration 0.5
+printf '%s\n' "$img" > "$STATE"

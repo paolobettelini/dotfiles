@@ -280,21 +280,107 @@ rofi -show drun
 
 ## Wallpapers
 
-Create a folder for the wallpapers:
+Install the animated wallpaper switcher ([pocket-dots](https://github.com/diegoMalagrida/pocket-dots)):
 
 ```bash
-sudo mkdir -p /usr/share/backgrounds
+sudo pacman -S --needed \
+    quickshell qt6-shadertools imagemagick \
+    python-numpy python-pillow uv
 
-cd dotfiles
-sudo cp wallpapers/* /usr/share/backgrounds/
-cd ..
+mkdir -p ~/.local/src ~/.local/bin
+mkdir -p ~/.config/quickshell/pocket-wallfx/shaders
+mkdir -p ~/Pictures/wallpapers
+
+git clone https://github.com/diegoMalagrida/pocket-dots.git ~/.local/src/pocket-dots
 ```
 
-To set the background:
+Copy the original transition engine and coverflow picker:
 
 ```bash
-awww img /path/to/wallpaper
+cp ~/.local/src/pocket-dots/home/.config/quickshell/WallpaperFx.qml \
+    ~/.config/quickshell/pocket-wallfx/
+cp ~/.local/src/pocket-dots/home/.config/quickshell/WallpaperPicker.qml \
+    ~/.config/quickshell/pocket-wallfx/
+cp ~/.local/src/pocket-dots/home/.config/quickshell/shaders/wallfx.frag \
+    ~/.config/quickshell/pocket-wallfx/shaders/
+cp ~/.local/src/pocket-dots/home/.config/quickshell/scripts/wall-thumbs.sh \
+    ~/.config/quickshell/pocket-wallfx/
+cp ~/.local/src/pocket-dots/home/.local/bin/wallfx ~/.local/bin/
+chmod +x ~/.local/bin/wallfx
 ```
+
+Install the standalone integration from the dotfiles:
+
+```bash
+cp wallfx/shell.qml ~/.config/quickshell/pocket-wallfx/shell.qml
+python3 wallfx/patch-colors.py ~/.config/quickshell/pocket-wallfx/WallpaperFx.qml
+python3 wallfx/patch-picker.py ~/.config/quickshell/pocket-wallfx/WallpaperPicker.qml
+cp scripts/pocket-wallpaper ~/.local/bin/
+chmod +x ~/.local/bin/pocket-wallpaper
+```
+
+Compile the shader:
+
+```bash
+/usr/lib/qt6/bin/qsb \
+    --glsl "150,330" \
+    ~/.config/quickshell/pocket-wallfx/shaders/wallfx.frag \
+    -o ~/.config/quickshell/pocket-wallfx/shaders/wallfx.v15.frag.qsb
+```
+
+Install the preset wallpapers:
+
+```bash
+cp ~/dotfiles/wallpapers/* ~/Pictures/wallpapers/
+```
+
+Install Python 3.13 for character segmentation (without changing system Python):
+
+```bash
+uv python install 3.13
+uv venv --python 3.13 ~/.local/share/wallfx/venv
+uv pip install --python ~/.local/share/wallfx/venv/bin/python \
+    rembg onnxruntime-openvino opencv-python-headless numpy pillow
+~/.local/bin/wallfx warm ~/Pictures/wallpapers
+```
+
+Start the shell and open the coverflow picker with **Super+S**:
+
+```bash
+qs -c pocket-wallfx
+~/.local/bin/pocket-wallpaper pick
+```
+
+To set a wallpaper directly:
+
+```bash
+~/.local/bin/pocket-wallpaper set ~/Pictures/wallpapers/desk.jpg
+```
+
+To add a new wallpaper:
+
+```bash
+cp /path/to/wallpaper.jpg ~/Pictures/wallpapers/
+~/.local/bin/wallfx warm ~/Pictures/wallpapers
+```
+
+To exclude a wallpaper from outline detection:
+
+```bash
+mkdir -p ~/.config/wallfx
+printf '%s\n' 'wallpaper.jpg' >> ~/.config/wallfx/sin-perfil
+```
+
+For troubleshooting:
+
+```bash
+qs -c pocket-wallfx ipc show
+qs -c pocket-wallfx ipc call wallfx state
+qs -c pocket-wallfx ipc call wallfx stats
+~/.local/bin/wallfx elige ~/Pictures/wallpapers/desk.jpg
+```
+
+The standalone Quickshell adaptation depends on upstream QML; recheck the patches when updating `pocket-dots`.
 
 ## Neovim
 

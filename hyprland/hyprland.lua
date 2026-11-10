@@ -67,7 +67,8 @@ hl.on("hyprland.start", function()
 
     -- Wallpaper
     hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("awww img /usr/share/backgrounds/desk.jpg")
+    hl.exec_cmd("awww img ~/Pictures/wallpapers/desk.jpg")
+    hl.exec_cmd("qs -c pocket-wallfx")
 
 
     -- Clipboard
@@ -508,6 +509,19 @@ hl.bind(
         description = "Toggle dashboard",
     }
 )
+
+------------------
+-- WALLPAPER PICKER
+------------------
+
+hl.bind(
+    mainMod .. " + S",
+
+    hl.dsp.exec_cmd(
+        "$HOME/.local/bin/pocket-wallpaper pick"
+    )
+)
+
 
 ------------------
 -- PROGRAMS
