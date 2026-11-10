@@ -44,6 +44,13 @@ hl.env("WEATHER_UNITS", "metric")
 
 hl.on("hyprland.start", function()
 
+    -- Plugins
+    if os.getenv("HYPR_NO_PLUGINS") ~= "1" then
+        hl.exec_cmd(
+            "hyprpm reload -n && hyprctl reload config-only"
+        )
+    end
+
     -- Clean up a stale dashboard instance from a previous session.
     hl.exec_cmd([[
         systemctl --user kill \
@@ -314,6 +321,71 @@ local mainMod = "SUPER"
 local DASHBOARD_WORKSPACE = "Dashboard"
 local DASHBOARD_UNIT = "hypr-dashboard.scope"
 
+------------------
+-- GLASSCOPE
+------------------
+
+if os.getenv("HYPR_NO_PLUGINS") ~= "1"
+    and hl.plugin.glasscope ~= nil
+then
+
+    hl.config({
+        plugin = {
+            glasscope = {
+                enabled = true,
+
+                radius = 130,
+                edge_width = 22.0,
+                zoom = 2.0,
+                bulge = 0.08,
+                refraction = 1.0,
+                dispersion = 0.7,
+                edge_strength = 1.25,
+                motion_strength = 1.5,
+                nearest = false,
+
+                color_strength = 0.3,
+                color_width = 18.0,
+
+                colors = {
+                    transmission = "rgba(ffb8740d)",
+                    refraction = "rgba(afd428a6)",
+                    reflection = "rgba(f77a9599)",
+                    highlight = "rgba(efe0d580)",
+                },
+            },
+        },
+    })
+
+
+    -- Toggle Glasscope
+    hl.bind(
+        mainMod .. " + G",
+
+        function()
+            hl.plugin.glasscope.toggle()
+        end,
+
+        {
+            description = "Toggle Glasscope liquid lens",
+        }
+    )
+
+
+    -- Start colour picker
+    hl.bind(
+        mainMod .. " + C",
+
+        function()
+            hl.plugin.glasscope.begin_color_probe()
+        end,
+
+        {
+            description = "Start Glasscope colour picker",
+        }
+    )
+
+end
 
 ------------------
 -- DASHBOARD
@@ -321,45 +393,22 @@ local DASHBOARD_UNIT = "hypr-dashboard.scope"
 
 local function open_dashboard()
 
-    -- First move to the dedicated empty workspace.
     hl.dispatch(
         hl.dsp.focus({
             workspace = "name:" .. DASHBOARD_WORKSPACE,
         })
     )
 
-
-    -- Wait until the workspace switch has happened.
-    hl.timer(function()
-
-        -- dashboard is launched inside its own systemd scope.
-        --
-        -- Any process forked by dashboard remains inside this
-        -- cgroup and can therefore be killed as one group.
-        hl.exec_cmd([[
-            systemctl --user kill \
-                --kill-whom=all \
-                --signal=KILL \
-                hypr-dashboard.scope \
-                >/dev/null 2>&1 || true
-
-            systemctl --user stop \
-                hypr-dashboard.scope \
-                >/dev/null 2>&1 || true
-
-            systemd-run \
-                --user \
-                --scope \
-                --quiet \
-                --collect \
-                --unit=hypr-dashboard \
-                --property=KillMode=control-group \
-                /bin/bash -lc 'exec dashboard'
-        ]])
-
-    end, {
-        type = "oneshot",
-    })
+    hl.exec_cmd([[
+        systemd-run \
+            --user \
+            --scope \
+            --quiet \
+            --collect \
+            --unit=hypr-dashboard \
+            --property=KillMode=control-group \
+            /bin/bash -lc 'exec dashboard'
+    ]])
 end
 
 

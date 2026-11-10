@@ -218,6 +218,12 @@ hyprctl reload
 hyprctl configerrors
 ```
 
+### Plugins
+
+```bash
+hyprpm add https://github.com/Horizon0427/Glasscope
+```
+
 ## Rtfetch
 
 ```bash
@@ -411,6 +417,7 @@ sudo rm /usr/local/share/fonts/*.txt
 sudo rm /usr/local/share/fonts/*.md
 
 sudo fc-cache -fv
+sudo pacman -S noto-fonts-cjk
 ```
 
 TODO NotoColorEmoji.ttf
