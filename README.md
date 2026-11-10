@@ -568,22 +568,35 @@ hl.env("WEATHER_UNITS", "metric")
 
 TODO install qt5-wayland or qt6-wayland.
 
-## MPD
+## Music widget
 
 ```bash
-sudo pacman -S mpc mpd
+sudo pacman -S --needed \
+    qt6-declarative \
+    qt6-5compat \
+    qt6-svg \
+    playerctl \
+    cava \
+    ttf-material-symbols-variable
 
-mkdir -p ~/.config/mpd
-mkdir -p ~/.mpd
+mkdir -p ~/.local/src
 
-cd dotfiles
-cp mpd/mpd.conf ~/.config/mpd/mpd.conf
-cd ..
+git clone \
+    https://github.com/zonicisalive/quickshell-music-player.git \
+    ~/.local/src/quickshell-music-player
 
-systemctl --user enable mpd.service
+cp quickshell-music-player/shell.qml \
+    ~/.local/src/quickshell-music-player/shell.qml
+
+cp quickshell-music-player/DesktopMusicCard.qml \
+    ~/.local/src/quickshell-music-player/
+
+cp quickshell-music-player/LyricsService.qml \
+    ~/.local/src/quickshell-music-player/services/
+
+cp -n quickshell-music-player/desktop-widget-positions.json \
+    ~/.local/src/quickshell-music-player/
 ```
-
-TODO
 
 ## LaTeX
 

@@ -64,12 +64,13 @@ hl.on("hyprland.start", function()
             >/dev/null 2>&1 || true
     ]])
 
-
     -- Wallpaper
     hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("awww img ~/Pictures/wallpapers/desk.jpg")
+    hl.exec_cmd("awww img $HOME/Pictures/wallpapers/desk.jpg")
     hl.exec_cmd("qs -c pocket-wallfx")
 
+    -- Music widget
+    hl.exec_cmd("qs -p $HOME/.local/src/quickshell-music-player")
 
     -- Clipboard
     hl.exec_cmd(
