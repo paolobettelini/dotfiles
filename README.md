@@ -606,6 +606,19 @@ cp quickshell-music-player/music-cava.conf \
     ~/.config/quickshell/music-cava.conf
 ```
 
+I also replayed the `lyrics.py` script with a native version
+
+```bash
+cd quickshell-music-player/lyrics
+
+cargo b -r
+
+install -Dm755 target/release/lyrics \
+    ~/.local/src/quickshell-music-player/scripts/lyrics/lyrics
+
+rm ~/.local/src/quickshell-music-player/scripts/lyrics/lyrics.py
+```
+
 ## LaTeX
 
 ```bash

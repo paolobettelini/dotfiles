@@ -224,9 +224,20 @@ Singleton {
         root._pendingRequest = null;
         root._runningRequestId = request.requestId;
         root._runningTrackKey = request.trackKey;
+
+        // Python version
+        // lyricsProc.command = [
+        //     "python3",
+        //     Qt.resolvedUrl("../scripts/lyrics/lyrics.py").toString().replace("file://", ""),
+        //     request.title,
+        //     request.artist,
+        //     request.album,
+        //     String(Math.floor(request.duration)),
+        //     request.requestId,
+        //     request.spotifyId ?? ""
+        // ];
         lyricsProc.command = [
-            "python3",
-            Qt.resolvedUrl("../scripts/lyrics/lyrics.py").toString().replace("file://", ""),
+            Qt.resolvedUrl("../scripts/lyrics/lyrics").toString().replace("file://", ""),
             request.title,
             request.artist,
             request.album,
@@ -234,6 +245,7 @@ Singleton {
             request.requestId,
             request.spotifyId ?? ""
         ];
+        
         lyricsProc.running = true;
     }
 

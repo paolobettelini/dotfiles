@@ -18,7 +18,8 @@ ShellRoot {
     readonly property var desktopScreen: {
         for (let i = 0; i < Quickshell.screens.length; ++i) {
             const candidate = Quickshell.screens[i];
-            if (candidate.name === "HDMI-A-1")
+            //if (candidate.name === "HDMI-A-1")
+            if (candidate.name === "DP-2")
                 return candidate;
         }
         return null;

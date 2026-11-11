@@ -1,0 +1,19 @@
+[package]
+name = "lyrics"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[dependencies]
+serde_json = "1"
+ureq = { version = "2.12", default-features = true }
+regex = "1"
+roxmltree = "0.20"
+percent-encoding = "2.3"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
