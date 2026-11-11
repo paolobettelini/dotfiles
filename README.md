@@ -561,7 +561,7 @@ cd ../..
 Set the weather configuration in `hyprland/hyprland.lua`:
 
 ```lua
-hl.env("WEATHER_API_KEY", "<key>>")
+hl.env("WEATHER_API_KEY", "<key>")
 hl.env("WEATHER_LOCATION", "London,uk")
 hl.env("WEATHER_UNITS", "metric")
 ```
@@ -596,6 +596,14 @@ cp quickshell-music-player/LyricsService.qml \
 
 cp -n quickshell-music-player/desktop-widget-positions.json \
     ~/.local/src/quickshell-music-player/
+
+cp quickshell-music-player/CavaStrip.qml \
+    ~/.local/src/quickshell-music-player/
+
+mkdir -p ~/.config/quickshell
+
+cp quickshell-music-player/music-cava.conf \
+    ~/.config/quickshell/music-cava.conf
 ```
 
 ## LaTeX

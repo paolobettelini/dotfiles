@@ -118,14 +118,24 @@ ShellRoot {
             left: 150
         }
         implicitWidth: 430
-        implicitHeight: 150
+        implicitHeight: 250
         color: "transparent"
 
+        CavaStrip {
+            x: 15
+            y: 0
+            width: parent.width - 30
+            height: 100
+            playing: root.musicPlaying
+        }
+
         DesktopMusicCard {
-            anchors.fill: parent
-            player: root.displayedPlayer
-            onPauseRequested: root.onPauseFromWidget()
-            onResumeRequested: root.onResumeFromWidget()
+            id: musicCard
+            x: 0
+            y: 100
+            width: parent.width
+            height: 150
+            player: root.activePlayer
         }
     }
 
