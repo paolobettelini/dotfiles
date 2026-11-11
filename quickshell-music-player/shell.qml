@@ -25,7 +25,74 @@ ShellRoot {
     }
 
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
-    readonly property bool musicPlaying: activePlayer !== null && activePlayer.isPlaying
+    // Keep the last playing player through transient Firefox/MPRIS state gaps.
+    property MprisPlayer recentPlayer: null
+    property bool visibleGrace: false
+    Timer {
+        id: visibilityGraceTimer
+        interval: 2200
+        onTriggered: root.visibleGrace = false
+    }
+    Timer {
+        interval: 400
+        repeat: true
+        running: true
+        triggeredOnStart: true
+        onTriggered: {
+            if (root.activePlayer?.isPlaying) {
+                root.recentPlayer = root.activePlayer;
+                return;
+            }
+            // Controller filtering can temporarily lose the playing Firefox entry.
+            for (const p of Mpris.players.values) {
+                if (p?.isPlaying && p?.trackTitle) {
+                    root.recentPlayer = p;
+                    return;
+                }
+            }
+        }
+    }
+    // Keep the exact player that was paused using the desktop widget.
+    property MprisPlayer heldPlayer: null
+    property bool pausedByWidget: false
+    readonly property MprisPlayer displayedPlayer:
+        pausedByWidget && heldPlayer !== null && !heldPlayer.isPlaying
+            ? heldPlayer
+            : activePlayer?.isPlaying ? activePlayer
+            : recentPlayer?.isPlaying ? recentPlayer
+            : (activePlayer ?? recentPlayer)
+    readonly property bool musicPlaying: displayedPlayer !== null && displayedPlayer.isPlaying
+    onMusicPlayingChanged: {
+        if (musicPlaying) {
+            visibleGrace = true;
+            visibilityGraceTimer.stop();
+            if (pausedByWidget) onResumeFromWidget();
+        } else if (!pausedByWidget && visibleGrace) {
+            visibilityGraceTimer.restart();
+        }
+    }
+
+    function onPauseFromWidget() {
+        heldPlayer = displayedPlayer;
+        pausedByWidget = heldPlayer !== null;
+        visibleGrace = false;
+        visibilityGraceTimer.stop();
+    }
+    function onResumeFromWidget() {
+        pausedByWidget = false;
+        heldPlayer = null;
+    }
+    onActivePlayerChanged: {
+        // A new playing player takes precedence over the manually paused one.
+        if (pausedByWidget && activePlayer !== null && activePlayer !== heldPlayer && activePlayer.isPlaying)
+            onResumeFromWidget();
+    }
+    Connections {
+        target: root.heldPlayer
+        function onTrackTitleChanged() {
+            if (root.pausedByWidget) root.onResumeFromWidget();
+        }
+    }
     readonly property bool lyricsAvailable: LyricsService.status === "ok"
         && LyricsService.lyricsLines.length > 0
 
@@ -36,7 +103,8 @@ ShellRoot {
     PanelWindow {
         id: playerWindow
         screen: root.desktopScreen
-        visible: root.desktopScreen !== null && root.musicPlaying
+        visible: root.desktopScreen !== null && root.displayedPlayer !== null
+            && (root.musicPlaying || root.pausedByWidget || root.visibleGrace)
         WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
         exclusionMode: ExclusionMode.Ignore
@@ -55,14 +123,18 @@ ShellRoot {
 
         DesktopMusicCard {
             anchors.fill: parent
-            player: root.activePlayer
+            player: root.displayedPlayer
+            onPauseRequested: root.onPauseFromWidget()
+            onResumeRequested: root.onResumeFromWidget()
         }
     }
 
     PanelWindow {
         id: lyricsWindow
         screen: root.desktopScreen
-        visible: root.desktopScreen !== null && root.musicPlaying && root.lyricsAvailable
+        visible: root.desktopScreen !== null
+            && (root.musicPlaying || (!root.pausedByWidget && root.visibleGrace))
+            && root.lyricsAvailable
         WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
         exclusionMode: ExclusionMode.Ignore
