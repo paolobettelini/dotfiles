@@ -1,6 +1,34 @@
 {
+  "monitor": "DP-2",
   "playerX": 48,
-  "playerY": 48,
-  "lyricsX": 560,
-  "lyricsY": 80
+  "playerY": 775,
+  "lyricsX": 1050,
+  "lyricsY": 200,
+
+  "wallpapers": {
+    "0.jpg": {
+      "playerX": 1200,
+      "playerY": 775
+    },
+    "kavinsky.jpg": {
+      "songs": ["Nightcall"],
+      "playerX": 1350,
+      "playerY": 775,
+      "lyricsX": 300,
+      "lyricsY": 300
+    },
+    "4.jpg": {
+      "lyricsX": 600,
+      "lyricsY": 100
+    },
+    "5.jpg": {
+      "lyricsX": 600,
+      "lyricsY": 300
+    },
+    "9.jpg": {
+      "lyricsX": 150,
+      "lyricsY": 200,
+      "authors": ["Macintosh"]
+    }
+  }
 }

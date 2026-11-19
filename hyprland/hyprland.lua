@@ -200,7 +200,6 @@ hl.window_rule({
     opacity = "0.9 0.9",
 })
 
-
 -- Float Alacritty, Latex-rec and swayimg
 hl.window_rule({
     match = {
@@ -209,7 +208,6 @@ hl.window_rule({
 
     float = true,
 })
-
 
 ------------------
 -- ANIMATIONS
@@ -374,7 +372,7 @@ then
     )
 
 
-    -- Start colour picker
+    -- Start colour picker !!!!!!!!
     hl.bind(
         mainMod .. " + C",
 

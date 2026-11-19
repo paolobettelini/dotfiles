@@ -577,6 +577,7 @@ sudo pacman -S --needed \
     qt6-svg \
     playerctl \
     cava \
+    rust \
     ttf-material-symbols-variable
 
 mkdir -p ~/.local/src
@@ -586,7 +587,7 @@ git clone \
     ~/.local/src/quickshell-music-player
 
 cp quickshell-music-player/shell.qml \
-    ~/.local/src/quickshell-music-player/shell.qml
+    ~/.local/src/quickshell-music-player/
 
 cp quickshell-music-player/DesktopMusicCard.qml \
     ~/.local/src/quickshell-music-player/
@@ -594,10 +595,16 @@ cp quickshell-music-player/DesktopMusicCard.qml \
 cp quickshell-music-player/LyricsService.qml \
     ~/.local/src/quickshell-music-player/services/
 
-cp -n quickshell-music-player/desktop-widget-positions.json \
+cp quickshell-music-player/CavaStrip.qml \
     ~/.local/src/quickshell-music-player/
 
-cp quickshell-music-player/CavaStrip.qml \
+cp quickshell-music-player/WallpaperPositions.qml \
+    ~/.local/src/quickshell-music-player/
+
+cp quickshell-music-player/WallpaperManager.qml \
+    ~/.local/src/quickshell-music-player/
+
+cp quickshell-music-player/desktop-widget-positions.json \
     ~/.local/src/quickshell-music-player/
 
 mkdir -p ~/.config/quickshell
@@ -606,17 +613,38 @@ cp quickshell-music-player/music-cava.conf \
     ~/.config/quickshell/music-cava.conf
 ```
 
-I also replayed the `lyrics.py` script with a native version
+The lyrics fetcher and wallpaper manager:
 
 ```bash
 cd quickshell-music-player/lyrics
 
-cargo b -r
+cargo build --release
 
 install -Dm755 target/release/lyrics \
     ~/.local/src/quickshell-music-player/scripts/lyrics/lyrics
 
-rm ~/.local/src/quickshell-music-player/scripts/lyrics/lyrics.py
+rm -f ~/.local/src/quickshell-music-player/scripts/lyrics/lyrics.py
+
+cd ../wallpaper-manager
+
+cargo build --release
+
+install -Dm755 target/release/wallpaper-manager \
+    ~/.local/src/quickshell-music-player/scripts/wallpaper-manager
+
+cd ../..
+```
+
+The widget layout and monitor are configured through `quickshell-music-player/desktop-widget-positions.json`. Each wallpaper can override the default positions or define music matching rules.
+
+Matching is case-insensitive. When a song matches, the manager temporarily switches the wallpaper using `pocket-wallpaper`. Otherwise, it restores the previously selected wallpaper. Widget positions are updated after a one-second delay. No periodic wallpaper rotation is enabled.
+
+The wallpaper manager runs only when a track or wallpaper changes, and its state is saved under `~/.local/state/pocket-wallfx/`.
+
+To inspect the saved wallpaper state:
+
+```bash
+~/.local/src/quickshell-music-player/scripts/wallpaper-manager status
 ```
 
 ## LaTeX

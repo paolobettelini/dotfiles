@@ -13,13 +13,26 @@ import "common"
 ShellRoot {
     id: root
 
-    // Select the center monitor by output name, not pointer location.
-    // Do not create the widgets if that output is disconnected.
+    WallpaperPositions {
+        id: positions
+        switchDelayMs: 1000
+    }
+
+    // Centralized wallpaper rules: music overrides are temporary; a manual
+    // wallpaper choice remains the base image. No periodic changes enabled.
+    WallpaperManager {
+        id: wallpaperManager
+        layoutSource: positions
+        player: root.displayedPlayer
+        trackActive: root.musicPlaying || root.pausedByWidget || root.visibleGrace
+    }
+
+    // Select the configured monitor, never the one under the pointer.
+    // Keep the windows hidden if the configured output is disconnected.
     readonly property var desktopScreen: {
         for (let i = 0; i < Quickshell.screens.length; ++i) {
             const candidate = Quickshell.screens[i];
-            //if (candidate.name === "HDMI-A-1")
-            if (candidate.name === "DP-2")
+            if (candidate.name === positions.monitor)
                 return candidate;
         }
         return null;
@@ -104,19 +117,21 @@ ShellRoot {
     PanelWindow {
         id: playerWindow
         screen: root.desktopScreen
-        visible: root.desktopScreen !== null && root.displayedPlayer !== null
+        visible: root.desktopScreen !== null && !positions.layoutSwitching
+            && root.displayedPlayer !== null
             && (root.musicPlaying || root.pausedByWidget || root.visibleGrace)
         WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
         exclusionMode: ExclusionMode.Ignore
 
         anchors {
-            bottom: true
+            top: true
             left: true
         }
+        // Position from the selected monitor's top-left, including CAVA.
         margins {
-            bottom: 28
-            left: 150
+            top: positions.playerY
+            left: positions.playerX
         }
         implicitWidth: 430
         implicitHeight: 250
@@ -137,29 +152,29 @@ ShellRoot {
             width: parent.width
             height: 150
             player: root.activePlayer
+            onPauseRequested: root.onPauseFromWidget()
+            onResumeRequested: root.onResumeFromWidget()
         }
     }
 
     PanelWindow {
         id: lyricsWindow
         screen: root.desktopScreen
-        visible: root.desktopScreen !== null
+        visible: root.desktopScreen !== null && !positions.layoutSwitching
             && (root.musicPlaying || (!root.pausedByWidget && root.visibleGrace))
             && root.lyricsAvailable
         WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
         exclusionMode: ExclusionMode.Ignore
 
-        // On a 1920x1080 central screen: vertically centered, near right edge.
+        // Position from the selected monitor's top-left.
         anchors {
             top: true
-            right: true
+            left: true
         }
         margins {
-            top: root.desktopScreen !== null
-                ? Math.max(0, Math.round((root.desktopScreen.height - implicitHeight) / 2))
-                : 0
-            right: 50
+            top: positions.lyricsY
+            left: positions.lyricsX
         }
         implicitWidth: 740
         implicitHeight: 510
